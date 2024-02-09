@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { Database } from "../database.types";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
+import { ReserveForm } from "../components/ReserveForm";
 
 export default async function Dashboard() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -17,7 +18,7 @@ export default async function Dashboard() {
     return (
       <>
         <Navbar />
-        <p>logged in</p>
+        <ReserveForm />
       </>
     );
   }
