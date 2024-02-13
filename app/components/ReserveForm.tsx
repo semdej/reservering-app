@@ -1,5 +1,6 @@
 "use client";
-
+import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -8,6 +9,8 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
+import { Input } from "./ui/input";
+
 import {
   Form,
   FormControl,
@@ -18,12 +21,18 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { toast } from "./ui/use-toast";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 const FormSchema = z.object({
-  dob: z.date({
-    required_error: "A date of birth is required.",
+  date: z.date({
+    required_error: "A date is required.",
   }),
+  room: z.string().optional(),
+  description: z.string().optional(),
 });
 
 export function ReserveForm() {
@@ -31,15 +40,35 @@ export function ReserveForm() {
     resolver: zodResolver(FormSchema),
   });
 
+  const [submitting, setSubmitting] = useState(false);
+
+  const onSubmit = async (data: any) => {
+    try {
+      console.log("Form Data:", data); // Log form data
+      setSubmitting(true);
+      const { data: reservation, error } = await supabase
+        .from("reservations")
+        .insert(data);
+      if (error) {
+        throw error;
+      }
+      console.log("Reservation added:", reservation);
+    } catch (error) {
+      console.error("Error adding reservation:", error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="dob"
+          name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Datum</FormLabel>
+              <FormLabel>Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -53,7 +82,7 @@ export function ReserveForm() {
                       {field.value ? (
                         format(field.value, "PPP")
                       ) : (
-                        <span>Kies een datum</span>
+                        <span>Select a date</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -71,14 +100,36 @@ export function ReserveForm() {
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                De datum waarop je wilt reserveren.
-              </FormDescription>
+              <FormDescription>The date you want to reserve.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Reserveren</Button>
+        <FormField
+          control={form.control}
+          name="room"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Room</FormLabel>
+              <Input {...field} placeholder="Room" />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Additional Info</FormLabel>
+              <Input {...field} placeholder="Additional information" />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={submitting}>
+          {submitting ? "Submitting..." : "Submit"}
+        </Button>
       </form>
     </Form>
   );
