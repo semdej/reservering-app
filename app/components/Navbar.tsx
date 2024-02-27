@@ -10,6 +10,11 @@ export default function Navbar() {
             Dashboard
           </Button>
         </Link>
+        <Link href="/reservations" legacyBehavior passHref>
+          <Button className="m-2" variant="outline">
+            Reservations
+          </Button>
+        </Link>
         <Link href="/account" legacyBehavior passHref>
           <Button className="m-2" variant="outline">
             Account
