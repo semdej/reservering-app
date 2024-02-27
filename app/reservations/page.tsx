@@ -23,7 +23,7 @@ export default async function Dashboard() {
     .order("date", { ascending: true });
 
   if (error) {
-    toast.error("Error fetching reservations:", error.message);
+    toast.error("Error fetching reservations!");
     return null;
   }
 
