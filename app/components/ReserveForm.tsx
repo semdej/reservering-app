@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Input } from "./ui/input";
 import { Database } from "../database.types";
+import { toast } from "sonner";
 
 import {
   Session,
@@ -62,7 +63,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
           .single();
 
         if (error) {
-          console.error("Error fetching profile:", error.message);
+          toast.error("Error fetching profile");
           return;
         }
 
@@ -79,7 +80,6 @@ export function ReserveForm({ session }: { session: Session | null }) {
 
   const onSubmit = async (data: any) => {
     try {
-      console.log("Form Data:", data); // Log form data
       setSubmitting(true);
       // Add the username to the reservation data before inserting
       data.fullname = fullname;
@@ -89,9 +89,9 @@ export function ReserveForm({ session }: { session: Session | null }) {
       if (error) {
         throw error;
       }
-      console.log("Reservation added:", reservation);
+      toast.success("Reservation added!");
     } catch (error) {
-      console.error("Error adding reservation:", error.message);
+      toast.error("Error adding reservation!");
     } finally {
       setSubmitting(false);
     }
