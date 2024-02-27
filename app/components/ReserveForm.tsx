@@ -85,7 +85,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
       }
       toast.success("Reservation added!");
     } catch (error) {
-      toast.error("Error adding reservation!" + " " + error.message);
+      toast.error("Error adding reservation!");
     } finally {
       setSubmitting(false);
     }
