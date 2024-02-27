@@ -4,6 +4,8 @@ import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/ui/mode-toggle";
 
+export const dynamic = "force-dynamic";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
