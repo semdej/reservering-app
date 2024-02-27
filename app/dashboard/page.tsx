@@ -4,15 +4,6 @@ import { Database } from "../database.types";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
 import { ReserveForm } from "../components/ReserveForm";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableCaption,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../components/ui/table";
 
 export default async function Dashboard() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -32,7 +23,7 @@ export default async function Dashboard() {
     return (
       <>
         <Navbar />
-        <ReserveForm />
+        <ReserveForm session={session} />
       </>
     );
   }
