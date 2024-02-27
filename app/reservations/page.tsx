@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { Database } from "../database.types";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
+import { DataTable } from "./DataTable";
+import { toast } from "sonner";
 
 export default async function Dashboard() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -11,18 +13,33 @@ export default async function Dashboard() {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (!session) {
+    redirect("/");
+  }
+
   const { data: reservations, error } = await supabase
     .from("reservations")
     .select("*")
     .order("date", { ascending: true });
 
-  if (!session) {
-    redirect("/");
-  } else {
-    return (
-      <>
-        <Navbar />
-      </>
-    );
+  if (error) {
+    toast.error("Error fetching reservations:", error.message);
+    return null;
   }
+
+  const reservationColumns = [
+    { accessorKey: "id", header: "ID" },
+    { accessorKey: "created_at", header: "Created At" },
+    { accessorKey: "date", header: "Date" },
+    { accessorKey: "room", header: "Room" },
+    { accessorKey: "description", header: "Description" },
+    { accessorKey: "fullname", header: "Fullname" },
+  ];
+
+  return (
+    <div>
+      <Navbar />
+      <DataTable columns={reservationColumns} data={reservations} />
+    </div>
+  );
 }
