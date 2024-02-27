@@ -18,7 +18,7 @@ export default async function Dashboard() {
     return (
       <>
         <Navbar />
-        <ReserveForm />
+        <ReserveForm session={session} />
       </>
     );
   }

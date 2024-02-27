@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -10,6 +10,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Input } from "./ui/input";
+import { Database } from "../database.types";
+
+import {
+  Session,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 
 import {
   Form,
@@ -33,12 +39,41 @@ const FormSchema = z.object({
   }),
   room: z.string().optional(),
   description: z.string().optional(),
+  fullname: z.string().optional(),
 });
 
-export function ReserveForm() {
+export function ReserveForm({ session }: { session: Session | null }) {
+  const supabaseClient = createClientComponentClient<Database>();
+  const user = session?.user;
+
+  const [fullname, setFullname] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+
+  useEffect(() => {
+    async function fetchProfile() {
+      if (user) {
+        const { data: profile, error } = await supabaseClient
+          .from("profiles")
+          .select("full_name")
+          .eq("id", user.id)
+          .single();
+
+        if (error) {
+          console.error("Error fetching profile:", error.message);
+          return;
+        }
+
+        if (profile) {
+          setFullname(profile.full_name || "");
+        }
+      }
+    }
+
+    fetchProfile();
+  }, [user, supabaseClient]);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -46,7 +81,9 @@ export function ReserveForm() {
     try {
       console.log("Form Data:", data); // Log form data
       setSubmitting(true);
-      const { data: reservation, error } = await supabase
+      // Add the username to the reservation data before inserting
+      data.fullname = fullname;
+      const { data: reservation, error } = await supabaseClient
         .from("reservations")
         .insert(data);
       if (error) {
@@ -123,6 +160,22 @@ export function ReserveForm() {
             <FormItem className="flex flex-col">
               <FormLabel>Additional Info</FormLabel>
               <Input {...field} placeholder="Additional information" />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="fullname"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Fullname</FormLabel>
+              <Input
+                disabled
+                {...field}
+                value={fullname || ""}
+                placeholder="Loading..."
+              />
               <FormMessage />
             </FormItem>
           )}
