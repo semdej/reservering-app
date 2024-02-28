@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import { DataTable } from "./DataTable";
 import { toast } from "sonner";
 
-export default async function Dashboard() {
+export default async function Reservations() {
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const {
