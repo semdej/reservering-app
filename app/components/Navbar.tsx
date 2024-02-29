@@ -9,6 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
+import { CiSettings } from "react-icons/ci";
+
 export default function Navbar() {
   return (
     <div className="flex gap-x-6 m-3 justify-between">
@@ -26,7 +28,11 @@ export default function Navbar() {
       </div>
       <div className="flex gap-x-6 m-3">
         <DropdownMenu>
-          <DropdownMenuTrigger>Instellingen</DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              <CiSettings size={25} />
+            </Button>
+          </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>
               <Link href="/account" legacyBehavior passHref>
