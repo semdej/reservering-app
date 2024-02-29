@@ -12,6 +12,15 @@ import { Label } from "../components/ui/label";
 import { toast } from "sonner";
 import Navbar from "../components/Navbar";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "../components/ui/card";
+
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(true);
@@ -85,69 +94,85 @@ export default function AccountForm({ session }: { session: Session | null }) {
   return (
     <>
       <Navbar />
-      <div className="form-widget">
-        <Avatar
-          uid={user!.id}
-          url={avatar_url}
-          size={150}
-          onUpload={(url) => {
-            setAvatarUrl(url);
-            updateProfile({ fullname, username, website, avatar_url: url });
-          }}
-        />
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" type="text" value={session?.user.email} disabled />
-        </div>
-        <div>
-          <Label htmlFor="fullName">Volledige Naam</Label>
-          <Input
-            id="fullName"
-            type="text"
-            value={fullname || ""}
-            onChange={(e) => setFullname(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label htmlFor="username">Gebruikersnaam</Label>
-          <Input
-            id="username"
-            type="text"
-            value={username || ""}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label htmlFor="website">Website</Label>
-          <Input
-            id="website"
-            type="url"
-            value={website || ""}
-            onChange={(e) => setWebsite(e.target.value)}
-          />
-        </div>
-        <div className="flex gap-x-6 m-3 justify-between">
-          <div>
-            <Button
-              className="button primary block"
-              onClick={() =>
-                updateProfile({ fullname, username, website, avatar_url })
-              }
-              disabled={loading}
-            >
-              {loading ? "Laden ..." : "Bijwerken"}
-            </Button>
-          </div>
+      <Card className="max-w-[900px] m-8">
+        <CardHeader>
+          <CardTitle>Account</CardTitle>
+          <CardDescription>
+            Hieronder kun je je profiel bijwerken.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="form-widget">
+            <Avatar
+              uid={user!.id}
+              url={avatar_url}
+              size={150}
+              onUpload={(url) => {
+                setAvatarUrl(url);
+                updateProfile({ fullname, username, website, avatar_url: url });
+              }}
+            />
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="text"
+                value={session?.user.email}
+                disabled
+              />
+            </div>
+            <div>
+              <Label htmlFor="fullName">Volledige Naam</Label>
+              <Input
+                id="fullName"
+                type="text"
+                value={fullname || ""}
+                onChange={(e) => setFullname(e.target.value)}
+              />
+            </div>
+            <div>
+              <Label htmlFor="username">Gebruikersnaam</Label>
+              <Input
+                id="username"
+                type="text"
+                value={username || ""}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div>
+              <Label htmlFor="website">Website</Label>
+              <Input
+                id="website"
+                type="url"
+                value={website || ""}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
 
-          <div>
-            <form action="/auth/signout" method="post">
-              <Button className="button block" type="submit">
-                Uitloggen
-              </Button>
-            </form>
+            <div className="flex gap-x-6 m-3 justify-between">
+              <div>
+                <Button
+                  className="button primary block"
+                  onClick={() =>
+                    updateProfile({ fullname, username, website, avatar_url })
+                  }
+                  disabled={loading}
+                >
+                  {loading ? "Laden ..." : "Bijwerken"}
+                </Button>
+              </div>
+
+              <div>
+                <form action="/auth/signout" method="post">
+                  <Button className="button block" type="submit">
+                    Uitloggen
+                  </Button>
+                </form>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </>
   );
 }

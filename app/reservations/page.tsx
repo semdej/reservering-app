@@ -5,6 +5,13 @@ import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
 import { DataTable } from "./DataTable";
 import { toast } from "sonner";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 
 export default async function Reservations() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -39,7 +46,17 @@ export default async function Reservations() {
   return (
     <div>
       <Navbar />
-      <DataTable columns={reservationColumns} data={reservations} />
+      <Card className="max-w-[900px] m-8">
+        <CardHeader>
+          <CardTitle>Reserveringen</CardTitle>
+          <CardDescription>
+            Hieronder vind je een overzicht van alle reserveringen.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <DataTable columns={reservationColumns} data={reservations} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

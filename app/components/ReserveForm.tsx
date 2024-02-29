@@ -11,6 +11,13 @@ import { Calendar } from "./ui/calendar";
 import { Input } from "./ui/input";
 import { Database } from "../database.types";
 import { toast } from "sonner";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 
 import {
   Session,
@@ -75,7 +82,6 @@ export function ReserveForm({ session }: { session: Session | null }) {
   const onSubmit = async (data: any) => {
     try {
       setSubmitting(true);
-      // Add the username to the reservation data before inserting
       data.fullname = fullname;
       const { data: reservation, error } = await supabaseClient
         .from("reservations")
@@ -83,99 +89,111 @@ export function ReserveForm({ session }: { session: Session | null }) {
       if (error) {
         throw error;
       }
-      toast.success("Reservation added!");
+      toast.success("Reservering toegevoegd!");
     } catch (error) {
-      toast.error("Error adding reservation!");
+      toast.error("Fout tijdens het reserveren!");
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="date"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Select a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) => date < new Date()}
-                    initialFocus
+    <Card className="max-w-[600px] m-8">
+      <CardHeader>
+        <CardTitle>Reserveer een ruimte</CardTitle>
+        <CardDescription>
+          Reserveer een ruimte voor een bepaalde datum en tijd.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Datum</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[240px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Selecteer een datum</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) => date < new Date()}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormDescription>
+                    De datum waarop je de ruimte wilt reserveren.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="room"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Ruimte</FormLabel>
+                  <Input {...field} placeholder="Ruimte" />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Overige Informatie</FormLabel>
+                  <Input {...field} placeholder="Overige Informatie" />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="fullname"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Volledige Naam</FormLabel>
+                  <Input
+                    disabled
+                    {...field}
+                    value={fullname || ""}
+                    placeholder="Loading..."
                   />
-                </PopoverContent>
-              </Popover>
-              <FormDescription>The date you want to reserve.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="room"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Room</FormLabel>
-              <Input {...field} placeholder="Room" />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Additional Info</FormLabel>
-              <Input {...field} placeholder="Additional information" />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="fullname"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Fullname</FormLabel>
-              <Input
-                disabled
-                {...field}
-                value={fullname || ""}
-                placeholder="Loading..."
-              />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={submitting}>
-          {submitting ? "Submitting..." : "Submit"}
-        </Button>
-      </form>
-    </Form>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={submitting}>
+              {submitting ? "Laden..." : "Reserveren"}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
