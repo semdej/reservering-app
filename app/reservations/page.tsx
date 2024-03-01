@@ -24,15 +24,33 @@ export default async function Reservations() {
     redirect("/");
   }
 
-  const { data: reservations, error } = await supabase
+  // Fetch team names from "profiles" table
+  const { data: profiles, error: profilesError } = await supabase
+    .from("profiles")
+    .select("team");
+
+  if (profilesError) {
+    toast.error("Error fetching profiles!");
+    return null;
+  }
+
+  const profileTeams = profiles.map((profile) => profile.team);
+
+  // Fetch reservations
+  const { data: reservations, error: reservationsError } = await supabase
     .from("reservations")
     .select("*")
     .order("date", { ascending: true });
 
-  if (error) {
+  if (reservationsError) {
     toast.error("Error fetching reservations!");
     return null;
   }
+
+  // Filter reservations based on matching team names
+  const filteredReservations = reservations.filter((reservation) =>
+    profileTeams.includes(reservation.team)
+  );
 
   const reservationColumns = [
     { accessorKey: "id", header: "ID" },
@@ -55,7 +73,7 @@ export default async function Reservations() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <DataTable columns={reservationColumns} data={reservations} />
+          <DataTable columns={reservationColumns} data={filteredReservations} />
         </CardContent>
       </Card>
     </div>
