@@ -42,6 +42,7 @@ const FormSchema = z.object({
   room: z.string().optional(),
   description: z.string().optional(),
   fullname: z.string().optional(),
+  team: z.string().optional(),
 });
 
 export function ReserveForm({ session }: { session: Session | null }) {
@@ -49,32 +50,34 @@ export function ReserveForm({ session }: { session: Session | null }) {
   const user = session?.user;
 
   const [fullname, setFullname] = useState<string | null>(null);
+  const [team, setTeam] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   useEffect(() => {
-    async function fetchProfile() {
+    async function fetchData() {
       if (user) {
-        const { data: profile, error } = await supabaseClient
+        const { data: profile, error: profileError } = await supabaseClient
           .from("profiles")
-          .select("full_name")
+          .select("full_name, team")
           .eq("id", user.id)
           .single();
 
-        if (error) {
+        if (profileError) {
           toast.error("Error fetching profile");
           return;
         }
 
         if (profile) {
           setFullname(profile.full_name || "");
+          setTeam(profile.team || "");
         }
       }
     }
 
-    fetchProfile();
+    fetchData();
   }, [user, supabaseClient]);
 
   const [submitting, setSubmitting] = useState(false);
@@ -83,6 +86,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
     try {
       setSubmitting(true);
       data.fullname = fullname;
+      data.team = team; // Include user's team in the data
       const { data: reservation, error } = await supabaseClient
         .from("reservations")
         .insert(data);
