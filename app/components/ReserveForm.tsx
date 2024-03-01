@@ -71,7 +71,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
         }
 
         if (profile) {
-          setFullname(profile.full_name || "");
+          setFullname(profile.fullname || "");
           setTeam(profile.team || "");
         }
       }
