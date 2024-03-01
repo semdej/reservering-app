@@ -41,12 +41,13 @@ export default async function Reservations() {
     { accessorKey: "room", header: "Room" },
     { accessorKey: "description", header: "Description" },
     { accessorKey: "fullname", header: "Fullname" },
+    { accessorKey: "team", header: "Team" },
   ];
 
   return (
     <div>
       <Navbar />
-      <Card className="max-w-[900px] m-8">
+      <Card className="max-w-[1000px] m-8">
         <CardHeader>
           <CardTitle>Reserveringen</CardTitle>
           <CardDescription>

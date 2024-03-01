@@ -95,6 +95,16 @@ export function TeamForm({ session }: { session: Session | null }) {
       if (error) {
         throw error;
       }
+
+      // Update profiles table with team name
+      const { data: profileUpdate, profileError } = await supabaseClient
+        .from("profiles")
+        .update({ team: data.teamname }) // Assuming the team name is stored in data.teamname
+        .eq("id", user.id);
+      if (profileError) {
+        throw profileError;
+      }
+
       toast.success("Team aangemaakt!");
     } catch (error) {
       toast.error("Fout tijdens het aanmaken van het team!");
@@ -102,6 +112,7 @@ export function TeamForm({ session }: { session: Session | null }) {
       setSubmitting(false);
     }
   };
+
   if (!hasTeam) {
     return (
       <Card className="max-w-[600px] m-8">
