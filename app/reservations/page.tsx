@@ -60,6 +60,8 @@ export default async function Reservations() {
     { accessorKey: "description", header: "Description" },
     { accessorKey: "fullname", header: "Fullname" },
     { accessorKey: "team", header: "Team" },
+    { accessorKey: "time", header: "Starttijd" },
+    { accessorKey: "timeuntil", header: "Eindtijd" },
   ];
 
   return (

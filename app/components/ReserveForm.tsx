@@ -34,11 +34,14 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { TimePicker } from "./time-picker";
 
 const FormSchema = z.object({
   date: z.date({
     required_error: "A date is required.",
   }),
+  time: z.string().optional(),
+  timeuntil: z.string().optional(), // Added "timeuntil" field to the schema
   room: z.string().optional(),
   description: z.string().optional(),
   fullname: z.string().optional(),
@@ -87,6 +90,11 @@ export function ReserveForm({ session }: { session: Session | null }) {
       setSubmitting(true);
       data.fullname = fullname;
       data.team = team; // Include user's team in the data
+
+      // Adjust the data object to include the time
+      data.time = format(new Date(data.time), "HH:mm");
+      data.timeuntil = format(new Date(data.timeuntil), "HH:mm"); // Adjust format as per your requirement
+
       const { data: reservation, error } = await supabaseClient
         .from("reservations")
         .insert(data);
@@ -154,6 +162,41 @@ export function ReserveForm({ session }: { session: Session | null }) {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="time"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Starttijd</FormLabel>
+                  <TimePicker
+                    date={field.value ? new Date(field.value) : undefined}
+                    setDate={(date) =>
+                      field.onChange(date ? date.toISOString() : "")
+                    }
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="timeuntil" // Added "timeuntil" field
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Eindtijd</FormLabel>
+                  <TimePicker
+                    date={field.value ? new Date(field.value) : undefined}
+                    setDate={(date) =>
+                      field.onChange(date ? date.toISOString() : "")
+                    }
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="room"
