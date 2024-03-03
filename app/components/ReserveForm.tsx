@@ -41,7 +41,7 @@ const FormSchema = z.object({
     required_error: "A date is required.",
   }),
   time: z.string().optional(),
-  timeuntil: z.string().optional(), // Added "timeuntil" field to the schema
+  timeuntil: z.string().optional(),
   room: z.string().optional(),
   description: z.string().optional(),
   fullname: z.string().optional(),
@@ -64,7 +64,13 @@ export function ReserveForm({ session }: { session: Session | null }) {
       if (user) {
         const { data: profile, error: profileError } = await supabaseClient
           .from("profiles")
-          .select("full_name, team")
+          .select("full_name")
+          .eq("id", user.id)
+          .single();
+
+        const { data: profile2, error: profile2Error } = await supabaseClient
+          .from("profiles")
+          .select("team")
           .eq("id", user.id)
           .single();
 
@@ -73,9 +79,14 @@ export function ReserveForm({ session }: { session: Session | null }) {
           return;
         }
 
+        if (profile2Error) {
+          toast.error("Error fetching profile");
+          return;
+        }
+
         if (profile) {
-          setFullname(profile.full_name || "");
-          setTeam(profile.team || "");
+          setFullname(profile.full_name || " ");
+          setTeam(profile2.team || "");
         }
       }
     }
@@ -89,11 +100,10 @@ export function ReserveForm({ session }: { session: Session | null }) {
     try {
       setSubmitting(true);
       data.fullname = fullname;
-      data.team = team; // Include user's team in the data
+      data.team = team;
 
-      // Adjust the data object to include the time
       data.time = format(new Date(data.time), "HH:mm");
-      data.timeuntil = format(new Date(data.timeuntil), "HH:mm"); // Adjust format as per your requirement
+      data.timeuntil = format(new Date(data.timeuntil), "HH:mm");
 
       const { data: reservation, error } = await supabaseClient
         .from("reservations")
