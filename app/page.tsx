@@ -1,14 +1,10 @@
-import AuthForm from "./auth-form";
+import NavbarHome from "./components/NavbarHome";
 
 export default function Home() {
   return (
-    <div className="row">
-      <div className="col-6">
-        <h1 className="header">Login</h1>
-      </div>
-      <div className="col-6 auth-widget">
-        <AuthForm />
-      </div>
+    <div>
+      <NavbarHome />
+      <h1>Home</h1>
     </div>
   );
 }
