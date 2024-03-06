@@ -18,7 +18,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "../components/ui/card";
 
 export default function AccountForm({ session }: { session: Session | null }) {
