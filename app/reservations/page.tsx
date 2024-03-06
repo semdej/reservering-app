@@ -22,10 +22,8 @@ export default async function Reservations() {
 
   if (!session) {
     redirect("/");
-    return null; // Add this line to stop execution after redirection
   }
 
-  // Fetch reservations
   const { data: reservations, error: reservationsError } = await supabase
     .from("reservations")
     .select("*")
