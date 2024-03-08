@@ -6,7 +6,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 
 export default function FeatureCards() {
   return (
-    <section className="bg-slate-50 dark:bg-slate-900">
+    <section className="bg-neutral-900">
       <div className="container space-y-8 py-12 text-center lg:py-20">
         <HeadingText subtext="Reserveer eenvoudig met ReserveMate">
           Efficiënt Ruimtebeheer
@@ -14,10 +14,10 @@ export default function FeatureCards() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <Card
             key="test"
-            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-secondary"
+            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-neutral-800"
           >
             <div className="flex">
-              <FaPeopleArrows size={30} />
+              <FaPeopleArrows color="#2A80FF" size={30} />
             </div>
             <div className="space-y-2">
               <CardTitle>Teams</CardTitle>
@@ -28,10 +28,10 @@ export default function FeatureCards() {
           </Card>
           <Card
             key="test"
-            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-secondary"
+            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-neutral-800"
           >
             <div className="flex">
-              <FaCalendarAlt size={30} />
+              <FaCalendarAlt color="#2A80FF" size={30} />
             </div>
             <div className="space-y-2">
               <CardTitle>Reserveren</CardTitle>
@@ -42,10 +42,10 @@ export default function FeatureCards() {
           </Card>
           <Card
             key="test"
-            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-secondary"
+            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-neutral-800"
           >
             <div className="flex">
-              <FaColumns size={30} />
+              <FaColumns color="#2A80FF" size={30} />
             </div>
             <div className="space-y-2">
               <CardTitle>Overzicht</CardTitle>

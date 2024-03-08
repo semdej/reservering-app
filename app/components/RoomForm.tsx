@@ -1,0 +1,140 @@
+"use client";
+import { useState, useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Database } from "../database.types";
+import { toast } from "sonner";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+
+import {
+  Session,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
+
+import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+
+const FormSchema = z.object({
+  teamname: z.string().optional(),
+  fullname: z.string().optional(),
+});
+
+export function RoomForm({ session }: { session: Session | null }) {
+  const supabaseClient = createClientComponentClient<Database>();
+  const user = session?.user;
+
+  const [fullname, setFullname] = useState<string | null>(null);
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+
+  useEffect(() => {
+    async function fetchProfile() {
+      if (user) {
+        const { data: profile, error } = await supabaseClient
+          .from("profiles")
+          .select("full_name")
+          .eq("id", user.id)
+          .single();
+
+        if (error) {
+          toast.error("Error fetching profile");
+          return;
+        }
+
+        if (profile) {
+          setFullname(profile.full_name || "");
+        }
+      }
+    }
+
+    fetchProfile();
+  }, [user, supabaseClient]);
+
+  const [submitting, setSubmitting] = useState(false);
+
+  const onSubmit = async (data: any) => {
+    try {
+      setSubmitting(true);
+      data.fullname = fullname;
+      const { data: team, error } = await supabaseClient
+        .from("teams")
+        .insert(data);
+      if (error) {
+        throw error;
+      }
+
+      // Update profiles table with team name
+      const { data: profileUpdate, profileError } = await supabaseClient
+        .from("profiles")
+        .update({ team: data.teamname }) // Assuming the team name is stored in data.teamname
+        .eq("id", user.id);
+      if (profileError) {
+        throw profileError;
+      }
+
+      toast.success("Team aangemaakt!");
+    } catch (error) {
+      toast.error("Fout tijdens het aanmaken van het team!");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Card className="max-w-[600px] m-8">
+      <CardHeader>
+        <CardTitle>Maak een team aan</CardTitle>
+        <CardDescription>
+          Maak een team aan en nodig je collega's uit om samen te werken.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="teamname"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Team Naam</FormLabel>
+                  <Input {...field} placeholder="Team Naam" />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="fullname"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Volledige Naam</FormLabel>
+                  <Input
+                    disabled
+                    {...field}
+                    value={fullname || ""}
+                    placeholder="Loading..."
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" disabled={submitting}>
+              {submitting ? "Laden..." : "Aanmaken"}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  );
+}

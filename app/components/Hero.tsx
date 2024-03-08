@@ -18,8 +18,7 @@ export default function Hero() {
           </h2>
         </div>
         <Link
-          href="https://google.com"
-          target="_blank"
+          href="/login"
           className={`w-[10rem] ${cn(buttonVariants({ size: "lg" }))}`}
         >
           Begin nu

@@ -49,6 +49,11 @@ export default function Navbar() {
                   Mijn Team
                 </Link>
               </DropdownMenuLabel>
+              <DropdownMenuLabel>
+                <Link href="/rooms" legacyBehavior passHref>
+                  Mijn Kamers
+                </Link>
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <form action="/auth/signout" method="post">

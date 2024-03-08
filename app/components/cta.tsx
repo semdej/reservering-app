@@ -1,58 +1,40 @@
-import HeadingText from "../components/heading-text";
-import { Card, CardDescription, CardTitle } from "../components/ui/card";
-import { CiBookmark } from "react-icons/ci";
+import Image from "next/image";
+import { CardDescription, CardTitle } from "../components/ui/card";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
-export default function FeatureCards() {
+export default function CTA() {
   return (
-    <section className="bg-slate-50 dark:bg-slate-900">
-      <div className="container space-y-8 py-12 text-center lg:py-20">
-        <HeadingText subtext="Reserveer eenvoudig met ReserveMate">
-          Efficiënt Ruimtebeheer
-        </HeadingText>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <Card
-            key="test"
-            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-secondary"
-          >
-            <div className="flex">
-              <CiBookmark size={30} />
+    <section className="py-12 lg:py-20">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="flex items-center justify-center md:order-2">
+            <Image
+              src="/cta.svg"
+              alt="CTA Image"
+              className="w-full h-auto md:max-w-lg"
+              width={500}
+              height={500}
+            />
+          </div>
+          <div className="flex flex-col justify-center md:order-1">
+            <div className="max-w-lg mx-auto">
+              <div className="space-y-2">
+                <CardTitle className="text-4xl text-center md:text-left">
+                  Nooit meer papier administratiewerk
+                </CardTitle>
+                <CardDescription className="text-lg text-center md:text-left">
+                  Beheer al uw reserveringen eenvoudig online en bespaar
+                  kostbare tijd.
+                </CardDescription>
+                <div className="flex justify-center md:justify-start">
+                  <Button>
+                    <Link href="/login">Start nu</Link>
+                  </Button>
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <CardTitle>Teams</CardTitle>
-              <CardDescription>
-                Beheer al uw reserveringen eenvoudig en werk samen met teams.
-              </CardDescription>
-            </div>
-          </Card>
-          <Card
-            key="test"
-            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-secondary"
-          >
-            <div className="flex">
-              <CiBookmark size={30} />
-            </div>
-            <div className="space-y-2">
-              <CardTitle>Reserveren</CardTitle>
-              <CardDescription>
-                Laat uw klanten ruimtes reserveren met slechts een paar klikken.
-              </CardDescription>
-            </div>
-          </Card>
-          <Card
-            key="test"
-            className="flex flex-grow flex-col items-center justify-between gap-4 p-8 dark:bg-secondary"
-          >
-            <div className="flex">
-              <CiBookmark size={30} />
-            </div>
-            <div className="space-y-2">
-              <CardTitle>Overzicht</CardTitle>
-              <CardDescription>
-                Een simpel overzicht, zodat u altijd weet welke ruimtes
-                beschikbaar zijn.
-              </CardDescription>
-            </div>
-          </Card>
+          </div>
         </div>
       </div>
     </section>
