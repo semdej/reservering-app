@@ -16,26 +16,26 @@ import {
 export default async function Rooms() {
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const teamColumns = [
+  const roomColumns = [
     { accessorKey: "id", header: "ID" },
-    { accessorKey: "teamname", header: "Team Naam" },
-    { accessorKey: "fullname", header: "Eigenaar" },
+    { accessorKey: "team", header: "Team Naam" },
+    { accessorKey: "roomname", header: "Kamer" },
   ];
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const { data: fullname } = await supabase
+  const { data: teamname } = await supabase
     .from("profiles")
-    .select("full_name")
+    .select("team")
     .eq("id", session.user.id)
     .single();
 
-  const { data: team } = await supabase
-    .from("teams")
+  const { data: room } = await supabase
+    .from("rooms")
     .select("*")
-    .eq("fullname", fullname.full_name);
+    .eq("team", teamname.team);
 
   if (!session) {
     redirect("/");
@@ -46,13 +46,13 @@ export default async function Rooms() {
         <RoomForm session={session} />
         <Card className="max-w-[900px] m-8">
           <CardHeader>
-            <CardTitle>Team</CardTitle>
+            <CardTitle>Kamers</CardTitle>
             <CardDescription>
-              Hieronder vind je een overzicht van jouw team.
+              Hieronder vind je een overzicht van alle kamers.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <DataTable columns={teamColumns} data={team} />
+            <DataTable columns={roomColumns} data={room} />
           </CardContent>
         </Card>
       </>
