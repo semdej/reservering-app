@@ -1,16 +1,16 @@
 "use client";
 import Link from "next/link";
 import { Button } from "./ui/button";
-
-import { Separator } from "./ui/separator";
-
 import { CiLogin } from "react-icons/ci";
+import Image from "next/image";
+import { Separator } from "./ui/separator";
 
 export default function NavbarHome() {
   return (
     <>
-      <div className="flex gap-x-6 m-2 justify-between">
-        <div>
+      <div className="flex items-center justify-between m-2">
+        <div className="flex items-center gap-x-6">
+          <Image src="/logo.svg" alt="ReserveMate" width={200} height={50} />
           <Link href="/" legacyBehavior passHref>
             <Button className="m-2" variant="ghost">
               Home
@@ -22,15 +22,15 @@ export default function NavbarHome() {
             </Button>
           </Link>
         </div>
-        <div className="flex gap-x-6 m-2">
-          <Button size="icon" variant="ghost">
-            <Link href="/login" legacyBehavior passHref>
+        <div>
+          <Link href="/login" legacyBehavior passHref>
+            <Button className="m-2" size="icon" variant="ghost">
               <CiLogin size={25} />
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </div>
-      <Separator className="mb-5 mt-0 " />
+      <Separator />
     </>
   );
 }

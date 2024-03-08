@@ -12,12 +12,14 @@ import {
 import { Separator } from "./ui/separator";
 
 import { CiSettings } from "react-icons/ci";
+import Image from "next/image";
 
 export default function Navbar() {
   return (
     <>
-      <div className="flex gap-x-6 m-2 justify-between">
-        <div>
+      <div className="flex justify-between items-center m-2">
+        <div className="flex items-center gap-x-6">
+          <Image src="/logo.svg" alt="ReserveMate" width={200} height={50} />
           <Link href="/dashboard" legacyBehavior passHref>
             <Button className="m-2" variant="ghost">
               Dashboard
@@ -29,7 +31,7 @@ export default function Navbar() {
             </Button>
           </Link>
         </div>
-        <div className="flex gap-x-6 m-2">
+        <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button size="icon" variant="ghost">
@@ -57,7 +59,7 @@ export default function Navbar() {
           </DropdownMenu>
         </div>
       </div>
-      <Separator className="mb-5 mt-0 " />
+      <Separator />
     </>
   );
 }
