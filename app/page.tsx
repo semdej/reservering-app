@@ -1,10 +1,13 @@
 import NavbarHome from "./components/NavbarHome";
+import Hero from "./components/Hero";
+import FeatureCards from "./components/feature-cards";
 
 export default function Home() {
   return (
     <div>
       <NavbarHome />
-      <h1>Home</h1>
+      <Hero />
+      <FeatureCards />
     </div>
   );
 }

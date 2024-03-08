@@ -18,7 +18,7 @@ export default function NavbarHome() {
           </Link>
           <Link href="/pricing" legacyBehavior passHref>
             <Button className="m-2" variant="ghost">
-              Pricing
+              Prijs
             </Button>
           </Link>
         </div>
