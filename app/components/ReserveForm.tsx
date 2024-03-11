@@ -35,6 +35,8 @@ import {
 } from "./ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { TimePicker } from "./time-picker";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
 
 const FormSchema = z.object({
   date: z.date({
@@ -54,6 +56,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
 
   const [fullname, setFullname] = useState<string | null>(null);
   const [team, setTeam] = useState<string | null>(null);
+  const [rooms, setRooms] = useState<{ roomname: string }[]>([]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -90,6 +93,21 @@ export function ReserveForm({ session }: { session: Session | null }) {
 
         if (profile2) {
           setTeam(profile2.team || "");
+        }
+
+        const { data: rooms, error: roomsError } = await supabaseClient
+          .from("rooms")
+          .select("roomname")
+          .eq("team", profile2.team);
+
+        if (roomsError) {
+          toast.error("Error fetching profile");
+          return;
+        }
+
+        if (rooms) {
+          console.log(rooms);
+          setRooms(rooms);
         }
       }
     }
@@ -216,7 +234,20 @@ export function ReserveForm({ session }: { session: Session | null }) {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Ruimte</FormLabel>
-                  <Input {...field} placeholder="Ruimte" />
+                  <RadioGroup
+                    defaultValue={field.value}
+                    onChange={field.onChange}
+                  >
+                    {rooms.map((room, index) => (
+                      <div key={index} className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value={room.roomname}
+                          id={room.roomname}
+                        />
+                        <Label htmlFor={room.roomname}>{room.roomname}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
                   <FormMessage />
                 </FormItem>
               )}
