@@ -24,9 +24,22 @@ export default async function Reservations() {
     redirect("/");
   }
 
+  const { data: profileData, error: profileError } = await supabase
+    .from("profiles")
+    .select("team")
+    .eq("id", session.user.id);
+
+  if (profileError || !profileData || profileData.length === 0) {
+    console.error("Error fetching user data:", profileError);
+    return null;
+  }
+
+  const userTeam = profileData[0].team;
+
   const { data: reservations, error: reservationsError } = await supabase
     .from("reservations")
     .select("*")
+    .eq("team", userTeam)
     .order("date", { ascending: true });
 
   if (reservationsError) {

@@ -40,11 +40,11 @@ import { Label } from "./ui/label";
 
 const FormSchema = z.object({
   date: z.date({
-    required_error: "A date is required.",
+    required_error: "Een datum is verplicht.",
   }),
-  time: z.string().optional(),
-  timeuntil: z.string().optional(),
-  room: z.string().optional(),
+  time: z.string({ required_error: "Een starttijd is verplicht." }),
+  timeuntil: z.string({ required_error: "Een eindtijd is verplicht." }),
+  room: z.string({ required_error: "Een kamer is verplicht." }),
   description: z.string().optional(),
   fullname: z.string().optional(),
   team: z.string().optional(),
@@ -132,6 +132,8 @@ export function ReserveForm({ session }: { session: Session | null }) {
       if (error) {
         throw error;
       }
+      window.location.reload();
+
       toast.success("Reservering toegevoegd!");
     } catch (error) {
       toast.error("Fout tijdens het reserveren!");

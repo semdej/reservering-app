@@ -23,7 +23,7 @@ import {
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 
 const FormSchema = z.object({
-  teamname: z.string().optional(),
+  teamname: z.string({ required_error: "Een team naam is verplicht." }),
   fullname: z.string().optional(),
 });
 
@@ -92,6 +92,7 @@ export function TeamForm({ session }: { session: Session | null }) {
       const { data: team, error } = await supabaseClient
         .from("teams")
         .insert(data);
+      window.location.reload();
       if (error) {
         throw error;
       }

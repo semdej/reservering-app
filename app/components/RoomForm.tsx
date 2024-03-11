@@ -23,7 +23,7 @@ import {
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 
 const FormSchema = z.object({
-  roomname: z.string().optional(),
+  roomname: z.string({ required_error: "Een kamer naam is verplicht." }),
   team: z.string().optional(),
 });
 
@@ -73,6 +73,7 @@ export function RoomForm({ session }: { session: Session | null }) {
       if (error) {
         throw error;
       }
+      window.location.reload();
 
       toast.success("Kamer aangemaakt!");
     } catch (error) {
