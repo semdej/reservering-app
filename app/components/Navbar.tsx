@@ -28,7 +28,7 @@ export default function Navbar() {
             </Link>
             <Link href="/reservations" legacyBehavior passHref>
               <Button className="m-2" variant="ghost">
-                Reservations
+                Reserveringen
               </Button>
             </Link>
           </div>
