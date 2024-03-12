@@ -65,8 +65,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
 
   useEffect(() => {
     async function fetchData() {
-      if (user && selectedDate) {
-        const formattedDate = format(selectedDate, "yyyy-MM-dd");
+      if (user) {
         const { data: profile, error: profileError } = await supabaseClient
           .from("profiles")
           .select("full_name")
@@ -107,6 +106,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
         }
 
         if (selectedDate) {
+          const formattedDate = format(selectedDate, "yyyy-MM-dd");
           const { data: reservations, error: reservationsError } =
             await supabaseClient
               .from("reservations")
