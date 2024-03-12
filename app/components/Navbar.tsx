@@ -17,19 +17,21 @@ import Image from "next/image";
 export default function Navbar() {
   return (
     <>
-      <div className="flex justify-between items-center m-2">
-        <div className="flex items-center gap-x-6">
+      <div className="flex flex-col md:flex-row justify-between items-center m-2">
+        <div className="flex items-center w-full overflow-x-auto mb-4 md:mb-0">
           <Image src="/logo.svg" alt="ReserveMate" width={200} height={50} />
-          <Link href="/dashboard" legacyBehavior passHref>
-            <Button className="m-2" variant="ghost">
-              Dashboard
-            </Button>
-          </Link>
-          <Link href="/reservations" legacyBehavior passHref>
-            <Button className="m-2" variant="ghost">
-              Reservations
-            </Button>
-          </Link>
+          <div className="flex flex-wrap gap-x-2">
+            <Link href="/dashboard" legacyBehavior passHref>
+              <Button className="m-2" variant="ghost">
+                Dashboard
+              </Button>
+            </Link>
+            <Link href="/reservations" legacyBehavior passHref>
+              <Button className="m-2" variant="ghost">
+                Reservations
+              </Button>
+            </Link>
+          </div>
         </div>
         <div>
           <DropdownMenu>

@@ -8,21 +8,23 @@ import { Separator } from "./ui/separator";
 export default function NavbarHome() {
   return (
     <>
-      <div className="flex items-center justify-between m-2">
+      <div className="flex flex-col md:flex-row items-center justify-between m-2">
         <div className="flex items-center gap-x-6">
           <Image src="/logo.svg" alt="ReserveMate" width={200} height={50} />
-          <Link href="/" legacyBehavior passHref>
-            <Button className="m-2" variant="ghost">
-              Home
-            </Button>
-          </Link>
-          <Link href="/pricing" legacyBehavior passHref>
-            <Button className="m-2" variant="ghost">
-              Prijs
-            </Button>
-          </Link>
+          <div className="flex flex-wrap gap-x-2">
+            <Link href="/" legacyBehavior passHref>
+              <Button className="m-2" variant="ghost">
+                Home
+              </Button>
+            </Link>
+            <Link href="/pricing" legacyBehavior passHref>
+              <Button className="m-2" variant="ghost">
+                Prijs
+              </Button>
+            </Link>
+          </div>
         </div>
-        <div>
+        <div className="md:mt-0 mt-4">
           <Link href="/login" legacyBehavior passHref>
             <Button className="m-2" size="icon" variant="ghost">
               <CiLogin size={25} />
