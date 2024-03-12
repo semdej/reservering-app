@@ -6,12 +6,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { Calendar } from "./ui/calendar";
-import { Input } from "./ui/input";
-import { Database } from "../database.types";
-import { toast } from "sonner";
 import {
   Card,
   CardContent,
@@ -19,12 +14,13 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-
+import { Input } from "./ui/input";
+import { Database } from "../database.types";
+import { toast } from "sonner";
 import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
-
 import {
   Form,
   FormControl,
@@ -38,6 +34,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { TimePicker } from "./time-picker";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
+import { DataTable } from "./DataTable";
+import { Calendar } from "./ui/calendar";
 
 const FormSchema = z.object({
   date: z.date({
@@ -58,6 +56,8 @@ export function ReserveForm({ session }: { session: Session | null }) {
   const [fullname, setFullname] = useState<string | null>(null);
   const [team, setTeam] = useState<string | null>(null);
   const [rooms, setRooms] = useState<{ roomname: string }[]>([]);
+  const [reservations, setReservations] = useState<any[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -65,7 +65,8 @@ export function ReserveForm({ session }: { session: Session | null }) {
 
   useEffect(() => {
     async function fetchData() {
-      if (user) {
+      if (user && selectedDate) {
+        const formattedDate = format(selectedDate, "yyyy-MM-dd");
         const { data: profile, error: profileError } = await supabaseClient
           .from("profiles")
           .select("full_name")
@@ -78,12 +79,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
           .eq("id", user.id)
           .single();
 
-        if (profileError) {
-          toast.error("Error fetching profile");
-          return;
-        }
-
-        if (profile2Error) {
+        if (profileError || profile2Error) {
           toast.error("Error fetching profile");
           return;
         }
@@ -102,19 +98,37 @@ export function ReserveForm({ session }: { session: Session | null }) {
           .eq("team", profile2.team);
 
         if (roomsError) {
-          toast.error("Error fetching profile");
+          toast.error("Error fetching rooms");
           return;
         }
 
         if (rooms) {
-          console.log(rooms);
           setRooms(rooms);
+        }
+
+        if (selectedDate) {
+          const { data: reservations, error: reservationsError } =
+            await supabaseClient
+              .from("reservations")
+              .select("*")
+              .eq("date", formattedDate)
+              .eq("team", profile2.team);
+
+          if (reservationsError) {
+            toast.error("Error fetching reservations");
+            console.log = reservationsError;
+            return;
+          }
+
+          if (reservations) {
+            setReservations(reservations);
+          }
         }
       }
     }
 
     fetchData();
-  }, [user, supabaseClient]);
+  }, [user, supabaseClient, selectedDate]);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -143,6 +157,21 @@ export function ReserveForm({ session }: { session: Session | null }) {
     }
   };
 
+  const columns = [
+    {
+      header: "Starttijd",
+      accessorKey: "time",
+    },
+    {
+      header: "Eindtijd",
+      accessorKey: "timeuntil",
+    },
+    {
+      header: "Ruimte",
+      accessorKey: "room",
+    },
+  ];
+
   return (
     <Card className="max-w-[600px] m-8">
       <CardHeader>
@@ -163,13 +192,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
+                        <Button variant="outline">
                           {field.value ? (
                             format(field.value, "PPP")
                           ) : (
@@ -183,7 +206,10 @@ export function ReserveForm({ session }: { session: Session | null }) {
                       <Calendar
                         mode="single"
                         selected={field.value}
-                        onSelect={field.onChange}
+                        onSelect={(date) => {
+                          field.onChange(date);
+                          setSelectedDate(date);
+                        }}
                         disabled={(date) => date < new Date()}
                         initialFocus
                       />
@@ -196,6 +222,10 @@ export function ReserveForm({ session }: { session: Session | null }) {
                 </FormItem>
               )}
             />
+
+            {selectedDate && (
+              <DataTable columns={columns} data={reservations} />
+            )}
 
             <FormField
               control={form.control}
@@ -216,7 +246,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
 
             <FormField
               control={form.control}
-              name="timeuntil" // Added "timeuntil" field
+              name="timeuntil"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Eindtijd</FormLabel>

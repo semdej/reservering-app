@@ -31,7 +31,7 @@ export default function AuthForm() {
             theme="dark"
             showLinks={false}
             providers={[]}
-            redirectTo="https://reservering-app.vercel.app/auth/callback"
+            redirectTo="http://localhost:3000/auth/callback"
           />
         </CardContent>
       </Card>
