@@ -3,6 +3,8 @@ import "./globals.css";
 import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/ui/mode-toggle";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +26,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Toaster />
+          <SpeedInsights />
+          <Analytics />
           {children}
           <div className="hidden">
             <ModeToggle />

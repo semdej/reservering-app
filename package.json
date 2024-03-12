@@ -29,6 +29,8 @@
     "@types/node": "20.1.4",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
     "bufferutil": "^4.0.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
