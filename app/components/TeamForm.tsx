@@ -93,6 +93,7 @@ export function TeamForm({ session }: { session: Session | null }) {
       const { data: team, error } = await supabaseClient
         .from("teams")
         .insert(data);
+
       window.location.reload();
       if (error) {
         throw error;
@@ -102,8 +103,18 @@ export function TeamForm({ session }: { session: Session | null }) {
         .from("profiles")
         .update({ team: data.teamname })
         .eq("id", user.id);
+
+      const { data: adminUpdate, adminError } = await supabaseClient
+        .from("profiles")
+        .update({ isadmin: true })
+        .eq("id", user.id);
+
       if (profileError) {
         throw profileError;
+      }
+
+      if (adminError) {
+        throw adminError;
       }
 
       toast.success("Team aangemaakt!");

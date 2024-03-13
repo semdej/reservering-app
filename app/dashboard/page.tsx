@@ -12,19 +12,13 @@ export default async function Dashboard() {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const { data: reservations, error } = await supabase
-    .from("reservations")
-    .select("*")
-    .order("date", { ascending: true });
-
   if (!session) {
     redirect("/");
-  } else {
-    return (
-      <>
-        <Navbar />
-        <ReserveForm session={session} />
-      </>
-    );
   }
+  return (
+    <>
+      <Navbar />
+      <ReserveForm session={session} />
+    </>
+  );
 }
