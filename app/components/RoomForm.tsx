@@ -33,6 +33,7 @@ export function RoomForm({ session }: { session: Session | null }) {
   const user = session?.user;
 
   const [team, setTeam] = useState<string | null>(null);
+  const [hasTeam, setHasTeam] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -54,6 +55,12 @@ export function RoomForm({ session }: { session: Session | null }) {
 
         if (profile) {
           setTeam(profile.team || "");
+        }
+
+        if (profile.team) {
+          setHasTeam(true);
+        } else {
+          setHasTeam(false);
         }
       }
     }
@@ -84,6 +91,24 @@ export function RoomForm({ session }: { session: Session | null }) {
     }
   };
 
+  if (!session || !hasTeam) {
+    return (
+      <Card className="max-w-[600px] m-8">
+        <CardHeader>
+          <CardTitle>Maak kamers aan</CardTitle>
+          <CardDescription>
+            Maak kamers aan die klanten kunnen boeken.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>
+            Je hebt nog geen team aangemaakt. Maak eerst een team aan voordat je
+            kamers kan aanmaken.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
   return (
     <Card className="max-w-[600px] m-8">
       <CardHeader>
