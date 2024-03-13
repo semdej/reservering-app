@@ -48,13 +48,17 @@ export default async function Reservations() {
     return null;
   }
 
+  reservations.forEach((reservation) => {
+    reservation.created_at = new Date(reservation.created_at).toLocaleString();
+  });
+
   const reservationColumns = [
     { accessorKey: "id", header: "ID" },
-    { accessorKey: "created_at", header: "Created At" },
-    { accessorKey: "date", header: "Date" },
-    { accessorKey: "room", header: "Room" },
-    { accessorKey: "description", header: "Description" },
-    { accessorKey: "fullname", header: "Fullname" },
+    { accessorKey: "created_at", header: "Aangemaakt Op" },
+    { accessorKey: "date", header: "Datum" },
+    { accessorKey: "room", header: "Ruimte" },
+    { accessorKey: "description", header: "Beschrijving" },
+    { accessorKey: "fullname", header: "Volledige Naam" },
     { accessorKey: "team", header: "Team" },
     { accessorKey: "time", header: "Starttijd" },
     { accessorKey: "timeuntil", header: "Eindtijd" },
