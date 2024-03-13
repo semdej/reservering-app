@@ -5,6 +5,12 @@ import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/ui/mode-toggle";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ReserveMate",
+  description: "De Nieuwe Manier Van Reserveren",
+};
 
 export const dynamic = "force-dynamic";
 
