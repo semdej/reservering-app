@@ -36,8 +36,9 @@ export default function Navbar() {
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="ghost">
-                <CiSettings size={25} />
+              <Button className="m-2" size="default" variant="secondary">
+                <CiSettings className="mr-2" size={25} />
+                Instellingen
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>

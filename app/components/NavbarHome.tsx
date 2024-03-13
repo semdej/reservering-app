@@ -21,8 +21,9 @@ export default function NavbarHome() {
         </div>
         <div className="md:mt-0 mt-4">
           <Link href="/login" legacyBehavior passHref>
-            <Button className="m-2" size="icon" variant="ghost">
-              <CiLogin size={25} />
+            <Button className="m-2" size="default" variant="default">
+              <CiLogin className="mr-2" size={25} />
+              Inloggen
             </Button>
           </Link>
         </div>
