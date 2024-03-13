@@ -25,14 +25,14 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 
 const FormSchema = z.object({
   teamname: z.string({ required_error: "Een team naam is verplicht." }),
-  fullname: z.string().optional(),
+  userid: z.string().optional(),
 });
 
 export function TeamForm({ session }: { session: Session | null }) {
   const supabaseClient = createClientComponentClient<Database>();
   const user = session?.user;
 
-  const [fullname, setFullname] = useState<string | null>(null);
+  const [userid, setUserID] = useState<string | null>(null);
   const [hasTeam, setHasTeam] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -44,7 +44,7 @@ export function TeamForm({ session }: { session: Session | null }) {
       if (user) {
         const { data: profile, error } = await supabaseClient
           .from("profiles")
-          .select("full_name")
+          .select("id")
           .eq("id", user.id)
           .single();
 
@@ -54,7 +54,7 @@ export function TeamForm({ session }: { session: Session | null }) {
         }
 
         if (profile) {
-          setFullname(profile.full_name || "");
+          setUserID(profile.id || "");
         }
       }
     }
@@ -64,11 +64,11 @@ export function TeamForm({ session }: { session: Session | null }) {
 
   useEffect(() => {
     async function checkIfUserHasTeam() {
-      if (user && fullname) {
+      if (user && userid) {
         const { data: team, error } = await supabaseClient
           .from("teams")
           .select()
-          .eq("fullname", fullname)
+          .eq("userid", user.id)
           .single();
 
         if (error) {
@@ -82,14 +82,14 @@ export function TeamForm({ session }: { session: Session | null }) {
     }
 
     checkIfUserHasTeam();
-  }, [user, fullname, supabaseClient]);
+  }, [user, userid, supabaseClient]);
 
   const [submitting, setSubmitting] = useState(false);
 
   const onSubmit = async (data: any) => {
     try {
       setSubmitting(true);
-      data.fullname = fullname;
+      data.userid = userid;
       const { data: team, error } = await supabaseClient
         .from("teams")
         .insert(data);
@@ -98,10 +98,9 @@ export function TeamForm({ session }: { session: Session | null }) {
         throw error;
       }
 
-      // Update profiles table with team name
       const { data: profileUpdate, profileError } = await supabaseClient
         .from("profiles")
-        .update({ team: data.teamname }) // Assuming the team name is stored in data.teamname
+        .update({ team: data.teamname })
         .eq("id", user.id);
       if (profileError) {
         throw profileError;
@@ -109,6 +108,7 @@ export function TeamForm({ session }: { session: Session | null }) {
 
       toast.success("Team aangemaakt!");
     } catch (error) {
+      console.error("Error creating team:", error);
       toast.error("Fout tijdens het aanmaken van het team!");
     } finally {
       setSubmitting(false);
@@ -140,14 +140,14 @@ export function TeamForm({ session }: { session: Session | null }) {
               />
               <FormField
                 control={form.control}
-                name="fullname"
+                name="userid"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Volledige Naam</FormLabel>
+                    <FormLabel>User ID</FormLabel>
                     <Input
                       disabled
                       {...field}
-                      value={fullname || ""}
+                      value={userid}
                       placeholder="Loading..."
                     />
                     <FormMessage />

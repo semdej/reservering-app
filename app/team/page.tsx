@@ -20,23 +20,23 @@ export default async function Team() {
   const teamColumns = [
     { accessorKey: "id", header: "ID" },
     { accessorKey: "teamname", header: "Team Naam" },
-    { accessorKey: "fullname", header: "Eigenaar" },
+    { accessorKey: "userid", header: "UserID" },
   ];
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const { data: fullname } = await supabase
+  const { data: userid } = await supabase
     .from("profiles")
-    .select("full_name")
+    .select("id")
     .eq("id", session.user.id)
     .single();
 
   const { data: team } = await supabase
     .from("teams")
     .select("*")
-    .eq("fullname", fullname.full_name);
+    .eq("userid", userid.id);
 
   if (!session) {
     redirect("/");
