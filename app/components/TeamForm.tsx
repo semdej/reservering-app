@@ -48,12 +48,6 @@ export function TeamForm({ session }: { session: Session | null }) {
           .eq("id", user.id)
           .single();
 
-        const { data: team } = await supabaseClient
-          .from("profiles")
-          .select("team")
-          .eq("id", user.id)
-          .single();
-
         if (error) {
           toast.error("Error fetching profile");
           return;
@@ -61,9 +55,6 @@ export function TeamForm({ session }: { session: Session | null }) {
 
         if (profile) {
           setFullname(profile.full_name || "");
-        }
-        if (team) {
-          setHasTeam(true);
         }
       }
     }
