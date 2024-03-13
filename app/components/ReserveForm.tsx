@@ -137,7 +137,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
       setSubmitting(true);
       data.fullname = fullname;
       data.team = team;
-
+      data.date = format(selectedDate, "yyyy-MM-dd");
       data.time = format(new Date(data.time), "HH:mm");
       data.timeuntil = format(new Date(data.timeuntil), "HH:mm");
 
