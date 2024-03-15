@@ -31,7 +31,7 @@ export default function AuthForm() {
             theme="dark"
             showLinks={false}
             providers={[]}
-            redirectTo="http://localhost:3000/auth/callback"
+            redirectTo="https://reservemate.nl/auth/callback"
           />
         </CardContent>
       </Card>
