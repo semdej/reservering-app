@@ -72,12 +72,8 @@ export default async function Rooms() {
         ) : (
           <div className="h-screen flex flex-col justify-center items-center">
             <p className="text-center text-gray-700">
-              Geen team of admin rol gevonden, maak er een aan of neem deel aan
-              een team op de{" "}
-              <Link className="text-blue-500 hover:underline" href="/team">
-                Team
-              </Link>{" "}
-              pagina.
+              Geen admin rol gevonden. Neem contact op als u denkt dat dit een
+              fout is.
             </p>
           </div>
         )}
