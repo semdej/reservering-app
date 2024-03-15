@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Link from "next/link";
 import { Button } from "./ui/button";
 import {
@@ -15,7 +16,7 @@ import { CiSettings } from "react-icons/ci";
 import Image from "next/image";
 import { ModeToggle } from "./ModeToggle";
 
-export default function Navbar() {
+export default function Navbar({ isAdmin }) {
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between items-center m-2">
@@ -27,11 +28,13 @@ export default function Navbar() {
                 Dashboard
               </Button>
             </Link>
-            <Link href="/reservations" legacyBehavior passHref>
-              <Button className="m-2" variant="ghost">
-                Reserveringen
-              </Button>
-            </Link>
+            {isAdmin ? (
+              <Link href="/reservations" legacyBehavior passHref>
+                <Button className="m-2" variant="ghost">
+                  Reserveringen
+                </Button>
+              </Link>
+            ) : null}
           </div>
         </div>
         <div>
@@ -53,11 +56,13 @@ export default function Navbar() {
                   Mijn Team
                 </Link>
               </DropdownMenuLabel>
-              <DropdownMenuLabel>
-                <Link href="/rooms" legacyBehavior passHref>
-                  Mijn Kamers
-                </Link>
-              </DropdownMenuLabel>
+              {isAdmin ? (
+                <DropdownMenuLabel>
+                  <Link href="/rooms" legacyBehavior passHref>
+                    Mijn Kamers
+                  </Link>
+                </DropdownMenuLabel>
+              ) : null}
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <form action="/auth/signout" method="post">

@@ -53,7 +53,7 @@ export default async function Rooms() {
   } else {
     return (
       <>
-        <Navbar />
+        <Navbar isAdmin={isAdmin} />
         {hasTeam && isAdmin ? (
           <>
             <RoomForm session={session} />

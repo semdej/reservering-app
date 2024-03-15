@@ -33,17 +33,25 @@ export default async function Team() {
     .eq("id", session.user.id)
     .single();
 
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", session.user.id)
+    .single();
+
   const { data: team } = await supabase
     .from("teams")
     .select("*")
     .eq("userid", userid.id);
+
+  const isAdmin = profileData && profileData.isadmin === true;
 
   if (!session) {
     redirect("/");
   } else {
     return (
       <>
-        <Navbar />
+        <Navbar isAdmin={isAdmin} />
         <TeamForm session={session} />
         <Card className="max-w-[900px] m-8">
           <CardHeader>

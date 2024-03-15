@@ -30,10 +30,11 @@ export default async function Dashboard() {
   }
 
   const hasTeam = profileData && profileData.team;
+  const isAdmin = profileData && profileData.isadmin === true;
 
   return (
     <>
-      <Navbar />
+      <Navbar isAdmin={isAdmin} />
       {hasTeam ? (
         <ReserveForm session={session} />
       ) : (

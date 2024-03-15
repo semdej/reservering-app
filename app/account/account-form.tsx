@@ -10,7 +10,6 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { toast } from "sonner";
-import Navbar from "../components/Navbar";
 
 import {
   Card,
@@ -92,7 +91,6 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
   return (
     <>
-      <Navbar />
       <Card className="max-w-[900px] m-8">
         <CardHeader>
           <CardTitle>Account</CardTitle>

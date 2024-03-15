@@ -76,7 +76,7 @@ export default async function Reservations() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isAdmin={isAdmin} />
       {hasTeam && isAdmin ? (
         <Card className="max-w-[1000px] m-8">
           <CardHeader>
