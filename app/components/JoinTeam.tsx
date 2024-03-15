@@ -111,6 +111,8 @@ export function JoinTeam({ session }: { session: Session | null }) {
         throw profileError;
       }
 
+      window.location.reload();
+
       toast.success("Deelgenomen!");
     } catch (error) {
       console.error("Error joining team:", error);
