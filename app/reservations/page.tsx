@@ -72,11 +72,12 @@ export default async function Reservations() {
   ];
 
   const hasTeam = teamData && teamData.team;
+  const isAdmin = teamData && teamData.isadmin === true;
 
   return (
     <div>
       <Navbar />
-      {hasTeam ? (
+      {hasTeam && isAdmin ? (
         <Card className="max-w-[1000px] m-8">
           <CardHeader>
             <CardTitle>Reserveringen</CardTitle>
@@ -91,7 +92,8 @@ export default async function Reservations() {
       ) : (
         <div className="h-screen flex flex-col justify-center items-center">
           <p className="text-center text-gray-700">
-            Geen team gevonden, maak er een aan of neem deel aan een team op de{" "}
+            Geen team of admin rol gevonden, maak er een aan of neem deel aan
+            een team op de{" "}
             <Link className="text-blue-500 hover:underline" href="/team">
               Team
             </Link>{" "}

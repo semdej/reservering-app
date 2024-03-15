@@ -46,6 +46,7 @@ export default async function Rooms() {
     .single();
 
   const hasTeam = teamData && teamData.team;
+  const isAdmin = teamData && teamData.isadmin === true;
 
   if (!session) {
     redirect("/");
@@ -53,7 +54,7 @@ export default async function Rooms() {
     return (
       <>
         <Navbar />
-        {hasTeam ? (
+        {hasTeam && isAdmin ? (
           <>
             <RoomForm session={session} />
             <Card className="max-w-[900px] m-8">
@@ -71,8 +72,8 @@ export default async function Rooms() {
         ) : (
           <div className="h-screen flex flex-col justify-center items-center">
             <p className="text-center text-gray-700">
-              Geen team gevonden, maak er een aan of neem deel aan een team op
-              de{" "}
+              Geen team of admin rol gevonden, maak er een aan of neem deel aan
+              een team op de{" "}
               <Link className="text-blue-500 hover:underline" href="/team">
                 Team
               </Link>{" "}
