@@ -22,7 +22,7 @@ export default async function Team() {
   const teamColumns = [
     { accessorKey: "id", header: "ID" },
     { accessorKey: "teamname", header: "Team Naam" },
-    { accessorKey: "userid", header: "UserID" },
+    { accessorKey: "invitecode", header: "Invite Code" },
   ];
 
   const {
