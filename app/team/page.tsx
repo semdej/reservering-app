@@ -5,6 +5,7 @@ import { Database } from "../database.types";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
 import { TeamForm } from "../components/TeamForm";
+
 import { DataTable } from "./DataTable";
 import {
   Card,
@@ -13,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import { JoinTeam } from "../components/JoinTeam";
 
 export default async function Team() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -53,6 +55,7 @@ export default async function Team() {
       <>
         <Navbar isAdmin={isAdmin} />
         <TeamForm session={session} />
+        <JoinTeam session={session} />
         <Card className="max-w-[900px] m-8">
           <CardHeader>
             <CardTitle>Team</CardTitle>
