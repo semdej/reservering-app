@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import Link from "next/link";
 
 export default async function Rooms() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -38,24 +39,47 @@ export default async function Rooms() {
     .select("*")
     .eq("team", teamname.team);
 
+  const { data: teamData, error: teamDataError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", session.user.id)
+    .single();
+
+  const hasTeam = teamData && teamData.team;
+
   if (!session) {
     redirect("/");
   } else {
     return (
       <>
         <Navbar />
-        <RoomForm session={session} />
-        <Card className="max-w-[900px] m-8">
-          <CardHeader>
-            <CardTitle>Kamers</CardTitle>
-            <CardDescription>
-              Hieronder vind je een overzicht van alle kamers.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <DataTable columns={roomColumns} data={room} />
-          </CardContent>
-        </Card>
+        {hasTeam ? (
+          <>
+            <RoomForm session={session} />
+            <Card className="max-w-[900px] m-8">
+              <CardHeader>
+                <CardTitle>Kamers</CardTitle>
+                <CardDescription>
+                  Hieronder vind je een overzicht van alle kamers.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DataTable columns={roomColumns} data={room} />
+              </CardContent>
+            </Card>
+          </>
+        ) : (
+          <div className="h-screen flex flex-col justify-center items-center">
+            <p className="text-center text-gray-700">
+              Geen team gevonden, maak er een aan of neem deel aan een team op
+              de{" "}
+              <Link className="text-blue-500 hover:underline" href="/team">
+                Team
+              </Link>{" "}
+              pagina.
+            </p>
+          </div>
+        )}
       </>
     );
   }

@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import Link from "next/link";
 
 export default async function Reservations() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -29,6 +30,12 @@ export default async function Reservations() {
     .from("profiles")
     .select("team")
     .eq("id", session.user.id);
+
+  const { data: teamData, error: teamDataError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", session.user.id)
+    .single();
 
   if (profileError || !profileData || profileData.length === 0) {
     console.error("Error fetching user data:", profileError);
@@ -64,20 +71,34 @@ export default async function Reservations() {
     { accessorKey: "timeuntil", header: "Eindtijd" },
   ];
 
+  const hasTeam = teamData && teamData.team;
+
   return (
     <div>
       <Navbar />
-      <Card className="max-w-[1000px] m-8">
-        <CardHeader>
-          <CardTitle>Reserveringen</CardTitle>
-          <CardDescription>
-            Hieronder vind je een overzicht van alle reserveringen.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <DataTable columns={reservationColumns} data={reservations} />
-        </CardContent>
-      </Card>
+      {hasTeam ? (
+        <Card className="max-w-[1000px] m-8">
+          <CardHeader>
+            <CardTitle>Reserveringen</CardTitle>
+            <CardDescription>
+              Hieronder vind je een overzicht van alle reserveringen.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DataTable columns={reservationColumns} data={reservations} />
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="h-screen flex flex-col justify-center items-center">
+          <p className="text-center text-gray-700">
+            Geen team gevonden, maak er een aan of neem deel aan een team op de{" "}
+            <Link className="text-blue-500 hover:underline" href="/team">
+              Team
+            </Link>{" "}
+            pagina.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
