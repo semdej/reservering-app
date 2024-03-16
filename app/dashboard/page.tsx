@@ -45,7 +45,7 @@ export default async function Dashboard() {
             alt="Team Illustration"
             className="mx-auto h-80 mb-4"
           />
-          <p className="text-center text-gray-700">
+          <p className="text-center text-gray-700 dark:text-white">
             Geen team gevonden, maak er een aan of neem deel aan een team op de{" "}
             <Link className="text-blue-500 hover:underline" href="/team">
               Team

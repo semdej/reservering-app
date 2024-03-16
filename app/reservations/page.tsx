@@ -96,7 +96,7 @@ export default async function Reservations() {
             alt="Team Illustration"
             className="mx-auto h-80 mb-4"
           />
-          <p className="text-center text-gray-700">
+          <p className="text-center text-gray-700 dark:text-white">
             Geen admin rol gevonden, neem contact op als u denkt dat dit een
             fout is.
           </p>
