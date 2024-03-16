@@ -53,7 +53,7 @@ export default async function Dashboard() {
             pagina.
           </p>
           <Button className="mt-4">
-            <Link href="/team">Maak een team aan</Link>
+            <Link href="/team">Mijn Team</Link>
           </Button>
         </div>
       )}
