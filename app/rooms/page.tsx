@@ -71,8 +71,13 @@ export default async function Rooms() {
           </>
         ) : (
           <div className="h-screen flex flex-col justify-center items-center">
+            <img
+              src="/team.svg"
+              alt="Team Illustration"
+              className="mx-auto h-80 mb-4"
+            />
             <p className="text-center text-gray-700">
-              Geen admin rol gevonden. Neem contact op als u denkt dat dit een
+              Geen admin rol gevonden, neem contact op als u denkt dat dit een
               fout is.
             </p>
           </div>

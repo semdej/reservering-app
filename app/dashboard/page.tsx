@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
 import { ReserveForm } from "../components/ReserveForm";
 import Link from "next/link";
+import { Button } from "../components/ui/button";
 
 export default async function Dashboard() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -39,6 +40,11 @@ export default async function Dashboard() {
         <ReserveForm session={session} />
       ) : (
         <div className="h-screen flex flex-col justify-center items-center">
+          <img
+            src="/team.svg"
+            alt="Team Illustration"
+            className="mx-auto h-80 mb-4"
+          />
           <p className="text-center text-gray-700">
             Geen team gevonden, maak er een aan of neem deel aan een team op de{" "}
             <Link className="text-blue-500 hover:underline" href="/team">
@@ -46,6 +52,9 @@ export default async function Dashboard() {
             </Link>{" "}
             pagina.
           </p>
+          <Button className="mt-4">
+            <Link href="/team">Maak een team aan</Link>
+          </Button>
         </div>
       )}
     </>
