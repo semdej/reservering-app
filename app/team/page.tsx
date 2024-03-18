@@ -65,7 +65,9 @@ export default async function Team() {
               <CardTitle>Uw huidige team: {userTeam}</CardTitle>
             </CardHeader>
             <CardContent>
-              Het is op dit moment nog niet mogelijk om je team te verlaten.
+              Het is op dit moment nog niet mogelijk om je team te verlaten. Het
+              is wel mogelijk om deel te nemen aan een ander team of een eigen
+              team aan te maken.
             </CardContent>
           </Card>
         ) : null}
