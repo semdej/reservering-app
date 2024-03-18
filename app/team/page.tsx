@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { JoinTeam } from "../components/JoinTeam";
+import LeaveTeam from "../components/LeaveTeam";
 
 export default async function Team() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -29,9 +30,11 @@ export default async function Team() {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const { data: userid } = await supabase
+  const {
+    data: { id: userId, team: userTeam },
+  } = await supabase
     .from("profiles")
-    .select("id")
+    .select("id, team")
     .eq("id", session.user.id)
     .single();
 
@@ -44,9 +47,10 @@ export default async function Team() {
   const { data: team } = await supabase
     .from("teams")
     .select("*")
-    .eq("userid", userid.id);
+    .eq("userid", userId);
 
   const isAdmin = profileData && profileData.isadmin === true;
+  const hasTeam = userTeam !== "";
 
   if (!session) {
     redirect("/");
@@ -55,8 +59,18 @@ export default async function Team() {
       <>
         <Navbar isAdmin={isAdmin} />
         <TeamForm session={session} />
+        {hasTeam ? (
+          <Card className="max-w-[600px] m-8">
+            <CardHeader>
+              <CardTitle>Uw huidige team: {userTeam}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              Het is op dit moment nog niet mogelijk om je team te verlaten.
+            </CardContent>
+          </Card>
+        ) : null}
         <JoinTeam session={session} />
-        <Card className="max-w-[900px] m-8">
+        <Card className="max-w-[600px] m-8">
           <CardHeader>
             <CardTitle>Team</CardTitle>
             <CardDescription>
