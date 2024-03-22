@@ -48,7 +48,7 @@ export default function Navbar({ isAdmin }) {
             <DropdownMenuContent>
               <DropdownMenuLabel>
                 <Link href="/account" legacyBehavior passHref>
-                  Mijn Account
+                  Account
                 </Link>
               </DropdownMenuLabel>
               <DropdownMenuLabel>
@@ -57,11 +57,18 @@ export default function Navbar({ isAdmin }) {
                 </Link>
               </DropdownMenuLabel>
               {isAdmin ? (
-                <DropdownMenuLabel>
-                  <Link href="/rooms" legacyBehavior passHref>
-                    Mijn Kamers
-                  </Link>
-                </DropdownMenuLabel>
+                <>
+                  <DropdownMenuLabel>
+                    <Link href="/rooms" legacyBehavior passHref>
+                      Kamers
+                    </Link>
+                  </DropdownMenuLabel>
+                  <DropdownMenuLabel>
+                    <Link href="/users" legacyBehavior passHref>
+                      Users
+                    </Link>
+                  </DropdownMenuLabel>
+                </>
               ) : null}
               <DropdownMenuSeparator />
               <DropdownMenuItem>
