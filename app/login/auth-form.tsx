@@ -27,7 +27,7 @@ export default function AuthForm() {
             appearance={{ theme: ThemeSupa }}
             theme="light"
             showLinks={false}
-            providers={[]}
+            providers={["github"]}
             redirectTo="https://reservemate.nl/auth/callback"
           />
         </div>
