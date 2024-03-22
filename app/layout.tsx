@@ -41,7 +41,6 @@ export default function RootLayout({
           </div>
         </ThemeProvider>
       </body>
-      <Footer />
     </html>
   );
 }
