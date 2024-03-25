@@ -9,7 +9,7 @@ import { ModeToggle } from "./ModeToggle";
 export default function NavbarHome() {
   return (
     <>
-      <div className="flex flex-col md:flex-row items-center justify-between m-2">
+      <div className="flex flex-col md:flex-row items-center justify-between m-2 lg:mr-8	lg:ml-8">
         <div className="flex items-center gap-x-6">
           <Image src="/logo.svg" alt="ReserveMate" width={150} height={50} />
           <div className="flex flex-wrap gap-x-2">
