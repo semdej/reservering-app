@@ -65,7 +65,7 @@ export default function Navbar({ isAdmin }) {
                   </DropdownMenuLabel>
                   <DropdownMenuLabel>
                     <Link href="/users" legacyBehavior passHref>
-                      Users
+                      Gebruikers
                     </Link>
                   </DropdownMenuLabel>
                 </>
