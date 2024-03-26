@@ -66,6 +66,19 @@ export default async function Rooms() {
                 <DataTable columns={userColumns} data={users} />
               </CardContent>
             </Card>
+            <Card className="max-w-[600px] m-8">
+              <CardHeader>
+                <CardTitle className="text-center">Totale Gebruikers</CardTitle>
+                <CardDescription className="text-center">
+                  Hieronder vind je het totaal aantal gebruikers in jouw team.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-5xl font-bold text-center text-blue-600">
+                  {users.length}
+                </p>
+              </CardContent>
+            </Card>
           </>
         ) : (
           <div className="h-screen flex flex-col justify-center items-center">
