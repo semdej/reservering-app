@@ -176,6 +176,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
     <Card className="max-w-[600px] m-8">
       <CardHeader>
         <CardTitle>Reserveer een ruimte</CardTitle>
+
         <CardDescription>
           Reserveer een ruimte voor een bepaalde datum en tijd.
         </CardDescription>

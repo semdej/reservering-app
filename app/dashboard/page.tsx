@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import { ReserveForm } from "../components/ReserveForm";
 import Link from "next/link";
 import { Button } from "../components/ui/button";
+import ReserveInfo from "../components/ReserveInfo";
 
 export default async function Dashboard() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -37,7 +38,10 @@ export default async function Dashboard() {
     <>
       <Navbar isAdmin={isAdmin} />
       {hasTeam ? (
-        <ReserveForm session={session} />
+        <>
+          <ReserveForm session={session} />
+          <ReserveInfo />
+        </>
       ) : (
         <div className="h-screen flex flex-col justify-center items-center">
           <img
