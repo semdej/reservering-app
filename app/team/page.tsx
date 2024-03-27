@@ -15,7 +15,8 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { JoinTeam } from "../components/JoinTeam";
-import LeaveTeam from "../components/LeaveTeam";
+import { Button } from "../components/ui/button";
+import { LeaveTeam } from "../components/LeaveTeam";
 
 export default async function Team() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -65,9 +66,7 @@ export default async function Team() {
               <CardTitle>Uw huidige team: {userTeam}</CardTitle>
             </CardHeader>
             <CardContent>
-              Het is op dit moment nog niet mogelijk om je team te verlaten. Het
-              is wel mogelijk om deel te nemen aan een ander team of een eigen
-              team aan te maken.
+              <LeaveTeam session={session} />
             </CardContent>
           </Card>
         ) : null}
