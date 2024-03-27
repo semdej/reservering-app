@@ -15,8 +15,8 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { JoinTeam } from "../components/JoinTeam";
-import { Button } from "../components/ui/button";
 import { LeaveTeam } from "../components/LeaveTeam";
+import { RemoveTeam } from "../components/RemoveTeam";
 
 export default async function Team() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -66,22 +66,29 @@ export default async function Team() {
             </CardHeader>
             <CardContent>
               <LeaveTeam session={session} />
+              {isAdmin ? <RemoveTeam session={session} /> : null}
             </CardContent>
           </Card>
         ) : null}
-        <TeamForm session={session} />
-        <JoinTeam session={session} />
-        <Card className="max-w-[600px] m-8">
-          <CardHeader>
-            <CardTitle>Team</CardTitle>
-            <CardDescription>
-              Hieronder vind je een overzicht van jouw team.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <DataTable columns={teamColumns} data={team} />
-          </CardContent>
-        </Card>
+        {!hasTeam ? (
+          <>
+            <TeamForm session={session} />
+            <JoinTeam session={session} />
+          </>
+        ) : null}
+        {isAdmin ? (
+          <Card className="max-w-[600px] m-8">
+            <CardHeader>
+              <CardTitle>Team</CardTitle>
+              <CardDescription>
+                Hieronder vind je een overzicht van jouw team.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <DataTable columns={teamColumns} data={team} />
+            </CardContent>
+          </Card>
+        ) : null}
       </>
     );
   }

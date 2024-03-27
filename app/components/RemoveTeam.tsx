@@ -29,7 +29,7 @@ const FormSchema = z.object({
   userid: z.string().optional(),
 });
 
-export function LeaveTeam({ session }: { session: Session | null }) {
+export function RemoveTeam({ session }: { session: Session | null }) {
   const supabaseClient = createClientComponentClient<Database>();
   const user = session?.user;
 
@@ -94,14 +94,12 @@ export function LeaveTeam({ session }: { session: Session | null }) {
 
       const { data: teamnames, error: teamnameError } = await supabaseClient
         .from("teams")
-        .select("teamname")
-        .eq("teamname", user.team);
+        .delete()
+        .eq("userid", user.id);
 
       if (teamnameError) {
         throw teamnameError;
       }
-
-      const teamname = teamnames[0]?.teamname;
 
       const { data: profileUpdate, error: profileError } = await supabaseClient
         .from("profiles")
@@ -114,55 +112,48 @@ export function LeaveTeam({ session }: { session: Session | null }) {
 
       window.location.reload();
 
-      toast.success("Verlaten!");
+      toast.success("Verwijderd!");
+      console.log("Team deleted!", teamnames, profileUpdate);
     } catch (error) {
-      console.error("Error leaving team:", error);
-      toast.error("Fout tijdens het verlaten van het team!");
+      console.error("Error deleting team:", error);
+      toast.error("Fout tijdens het verwijderen van het team!");
     } finally {
       setSubmitting(false);
     }
   };
 
-  if (!hasTeam) {
-    return (
-      <>
-        <AlertDialog>
-          <AlertDialogTrigger
-            className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            variant="destructive"
-            disabled={submitting || hasTeam}
-          >
-            Team Verlaten
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Weet je het zeker?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Deze actie kan niet ongedaan worden gemaakt. Weet je zeker dat
-                je je team wilt verlaten?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Annuleren</AlertDialogCancel>
-              <AlertDialogAction
-                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-                onClick={() =>
-                  onSubmit(
-                    form.getValues(),
-                    userid,
-                    user,
-                    supabaseClient,
-                    toast
-                  )
-                }
-              >
-                Doorgaan
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </>
-    );
-  }
+  return (
+    <>
+      <AlertDialog>
+        <AlertDialogTrigger
+          className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          variant="destructive"
+          disabled={submitting}
+        >
+          Team Verwijderen
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Weet je het zeker?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Deze actie kan niet ongedaan worden gemaakt. Weet je zeker dat je
+              je team wilt verwijderen en verlaten?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Annuleren</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+              onClick={() =>
+                onSubmit(form.getValues(), userid, user, supabaseClient, toast)
+              }
+            >
+              Doorgaan
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
 }
