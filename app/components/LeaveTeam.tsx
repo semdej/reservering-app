@@ -145,6 +145,7 @@ export function LeaveTeam({ session }: { session: Session | null }) {
             <AlertDialogFooter>
               <AlertDialogCancel>Annuleren</AlertDialogCancel>
               <AlertDialogAction
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
                 onClick={() =>
                   onSubmit(

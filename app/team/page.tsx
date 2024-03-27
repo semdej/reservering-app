@@ -59,7 +59,6 @@ export default async function Team() {
     return (
       <>
         <Navbar isAdmin={isAdmin} />
-        <TeamForm session={session} />
         {hasTeam ? (
           <Card className="max-w-[600px] m-8">
             <CardHeader>
@@ -70,6 +69,7 @@ export default async function Team() {
             </CardContent>
           </Card>
         ) : null}
+        <TeamForm session={session} />
         <JoinTeam session={session} />
         <Card className="max-w-[600px] m-8">
           <CardHeader>
