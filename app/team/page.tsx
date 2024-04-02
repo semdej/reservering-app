@@ -65,7 +65,7 @@ export default async function Team() {
               <CardTitle>Uw huidige team: {userTeam}</CardTitle>
             </CardHeader>
             <CardContent>
-              <LeaveTeam session={session} />
+              {!isAdmin ? <LeaveTeam session={session} /> : null}
               {isAdmin ? <RemoveTeam session={session} /> : null}
             </CardContent>
           </Card>
