@@ -20,6 +20,7 @@ export default async function Rooms() {
     { accessorKey: "id", header: "ID" },
     { accessorKey: "username", header: "Gebruikersnaam" },
     { accessorKey: "team", header: "Team" },
+    { accessorKey: "isadmin", header: "Admin" },
   ];
 
   const {
