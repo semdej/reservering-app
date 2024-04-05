@@ -8,7 +8,15 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 
+import {
+  Session,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
+import { Database } from "../database.types";
+
 function RowActions() {
+  const supabaseClient = createClientComponentClient<Database>();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -21,8 +29,20 @@ function RowActions() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>Acties</DropdownMenuLabel>
-        <DropdownMenuItem>Wijzigen</DropdownMenuItem>
-        <DropdownMenuItem>Verwijderen</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            console.log("Wijzigen");
+          }}
+        >
+          Wijzigen
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            console.log("Verwijderen");
+          }}
+        >
+          Verwijderen
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
