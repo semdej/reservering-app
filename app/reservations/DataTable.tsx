@@ -23,6 +23,7 @@ import {
 
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+import Image from "next/image";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -103,7 +104,14 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Geen resultaten.
+                  <div className="text-lg">Geen reserveringen gevonden</div>
+                  <Image
+                    src="/reservations.svg"
+                    alt="Reservation Illustration"
+                    width={250}
+                    height={250}
+                    className="mx-auto mt-4"
+                  />
                 </TableCell>
               </TableRow>
             )}

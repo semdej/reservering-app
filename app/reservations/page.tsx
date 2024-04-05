@@ -13,7 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import Image from "next/image";
 
 export default async function Reservations() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -81,13 +80,6 @@ export default async function Reservations() {
         <Card className="max-w-[1000px] m-8">
           <CardHeader>
             <CardTitle>Reserveringen</CardTitle>
-            <Image
-              src="/reservations.svg"
-              alt="Reservation Illustration"
-              width={250}
-              height={250}
-              className="pt-8"
-            />
             <CardDescription>
               Hieronder vind je een overzicht van alle reserveringen.
             </CardDescription>
