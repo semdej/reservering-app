@@ -36,6 +36,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { DataTable } from "./DataTable";
 import { Calendar } from "./ui/calendar";
+import { IoIosWarning } from "react-icons/io";
 
 const FormSchema = z.object({
   date: z.date({
@@ -58,6 +59,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
   const [rooms, setRooms] = useState<{ roomname: string }[]>([]);
   const [reservations, setReservations] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const hasRooms = rooms.length > 0;
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -262,30 +264,44 @@ export function ReserveForm({ session }: { session: Session | null }) {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="room"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Ruimte</FormLabel>
-                  <RadioGroup
-                    defaultValue={field.value}
-                    onChange={field.onChange}
-                  >
-                    {rooms.map((room, index) => (
-                      <div key={index} className="flex items-center space-x-2">
-                        <RadioGroupItem
-                          value={room.roomname}
-                          id={room.roomname}
-                        />
-                        <Label htmlFor={room.roomname}>{room.roomname}</Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {hasRooms ? (
+              <FormField
+                control={form.control}
+                name="room"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Ruimte</FormLabel>
+                    <RadioGroup
+                      defaultValue={field.value}
+                      onChange={field.onChange}
+                    >
+                      {rooms.map((room, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center space-x-2"
+                        >
+                          <RadioGroupItem
+                            value={room.roomname}
+                            id={room.roomname}
+                          />
+                          <Label htmlFor={room.roomname}>{room.roomname}</Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <>
+                <FormLabel className="flex flex-col">Ruimte</FormLabel>
+                <p className="text-red-500">
+                  <IoIosWarning size={40} className="text-red-500" />
+                  Geen kamers gevonden, vraag de beheerder van uw team om kamers
+                  aan te maken!
+                </p>
+              </>
+            )}
             <FormField
               control={form.control}
               name="description"
@@ -313,9 +329,15 @@ export function ReserveForm({ session }: { session: Session | null }) {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={submitting}>
-              {submitting ? "Laden..." : "Reserveren"}
-            </Button>
+            {hasRooms ? (
+              <Button type="submit" disabled={submitting}>
+                {submitting ? "Laden..." : "Reserveren"}
+              </Button>
+            ) : (
+              <Button type="submit" disabled>
+                Reserveren
+              </Button>
+            )}
           </form>
         </Form>
       </CardContent>
