@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import RowActions from "../components/RowActions";
 
 export default async function Reservations() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -68,6 +69,10 @@ export default async function Reservations() {
     { accessorKey: "team", header: "Team" },
     { accessorKey: "time", header: "Starttijd" },
     { accessorKey: "timeuntil", header: "Eindtijd" },
+    {
+      id: "actions",
+      cell: RowActions,
+    },
   ];
 
   const hasTeam = teamData && teamData.team;
