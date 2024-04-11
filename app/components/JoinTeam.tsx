@@ -145,22 +145,24 @@ export function JoinTeam({ session }: { session: Session | null }) {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="userid"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>User ID</FormLabel>
-                    <Input
-                      disabled
-                      {...field}
-                      value={userid}
-                      placeholder="Loading..."
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="hidden">
+                <FormField
+                  control={form.control}
+                  name="userid"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>User ID</FormLabel>
+                      <Input
+                        disabled
+                        {...field}
+                        value={userid}
+                        placeholder="Loading..."
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <Button type="submit" disabled={submitting || hasTeam}>
                 {submitting ? "Laden..." : "Deelnemen"}
