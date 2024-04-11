@@ -39,8 +39,15 @@ export default async function Dashboard() {
       <Navbar isAdmin={isAdmin} />
       {hasTeam ? (
         <>
+          <h1 className="text-2xl font-bold text-center mt-4">
+            Welkom terug,{" "}
+            <span className="text-blue-500">{profileData.full_name}</span>
+          </h1>
+          <h1 className="text-xl text-center mt-2">
+            Je bent lid van team{" "}
+            <span className=" text-blue-500">{profileData.team}</span>
+          </h1>
           <ReserveForm session={session} />
-          <ReserveInfo />
         </>
       ) : (
         <div className="h-screen flex flex-col justify-center items-center">
