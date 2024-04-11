@@ -53,7 +53,7 @@ export default function Navbar({ isAdmin }) {
               </DropdownMenuLabel>
               <DropdownMenuLabel>
                 <Link href="/team" legacyBehavior passHref>
-                  Mijn Team
+                  Team
                 </Link>
               </DropdownMenuLabel>
               {isAdmin ? (
