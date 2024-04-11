@@ -8,13 +8,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Database } from "../database.types";
 import { toast } from "sonner";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { buttonVariants } from "../components/ui/button";
 
 import {
   Session,
@@ -22,6 +16,15 @@ import {
 } from "@supabase/auth-helpers-nextjs";
 
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
 
 const FormSchema = z.object({
   roomname: z.string({ required_error: "Een kamer naam is verplicht." }),
@@ -91,33 +94,24 @@ export function RoomForm({ session }: { session: Session | null }) {
     }
   };
 
-  if (!session || !hasTeam) {
-    return (
-      <Card className="max-w-[600px] m-8">
-        <CardHeader>
-          <CardTitle>Maak kamers aan</CardTitle>
-          <CardDescription>
-            Maak kamers aan die klanten kunnen boeken.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>
-            Je hebt nog geen team aangemaakt. Maak eerst een team aan voordat je
-            kamers kan aanmaken.
-          </p>
-        </CardContent>
-      </Card>
-    );
-  }
   return (
-    <Card className="max-w-[600px] m-8">
-      <CardHeader>
-        <CardTitle>Maak kamers aan</CardTitle>
-        <CardDescription>
-          Maak kamers aan die klanten kunnen boeken.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <Dialog>
+      <DialogTrigger
+        className={buttonVariants({
+          variant: "default",
+          size: "icon",
+          class: "font-bold float-right",
+        })}
+      >
+        +
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Maak kamers aan</DialogTitle>
+          <DialogDescription>
+            Maak kamers aan die klanten kunnen boeken.
+          </DialogDescription>
+        </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -153,7 +147,7 @@ export function RoomForm({ session }: { session: Session | null }) {
             </Button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -13,7 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import Link from "next/link";
 
 export default async function Rooms() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -56,12 +55,12 @@ export default async function Rooms() {
         <Navbar isAdmin={isAdmin} />
         {hasTeam && isAdmin ? (
           <>
-            <RoomForm session={session} />
             <Card className="max-w-[900px] m-8">
               <CardHeader>
                 <CardTitle>Kamers</CardTitle>
                 <CardDescription>
                   Hieronder vind je een overzicht van alle kamers.
+                  <RoomForm session={session} />
                 </CardDescription>
               </CardHeader>
               <CardContent>
