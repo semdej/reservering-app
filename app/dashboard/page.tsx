@@ -7,7 +7,8 @@ import Navbar from "../components/Navbar";
 import { ReserveForm } from "../components/ReserveForm";
 import Link from "next/link";
 import { Button } from "../components/ui/button";
-import ReserveInfo from "../components/ReserveInfo";
+import { Card, CardContent } from "../components/ui/card";
+import { Separator } from "../components/ui/separator";
 
 export default async function Dashboard() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -39,14 +40,21 @@ export default async function Dashboard() {
       <Navbar isAdmin={isAdmin} />
       {hasTeam ? (
         <>
-          <h1 className="text-2xl font-bold text-center mt-4">
-            Welkom terug,{" "}
-            <span className="text-blue-500">{profileData.full_name}</span>
-          </h1>
-          <h1 className="text-xl text-center mt-2">
-            Je bent lid van team{" "}
-            <span className=" text-blue-500">{profileData.team}</span>
-          </h1>
+          <Card className="mx-8 max-w-96 mt-5">
+            <CardContent>
+              <h1 className="text-2xl font-bold text-center mt-4">
+                Welkom terug,{" "}
+              </h1>
+              <h1 className="text-blue-500 text-2xl font-bold text-center mt-1">
+                {profileData.full_name}
+              </h1>
+              <Separator className="my-4" />
+              <h1 className="text-xl text-center mt-2">
+                Je bent lid van team{" "}
+                <span className=" text-blue-500">{profileData.team}</span>
+              </h1>
+            </CardContent>
+          </Card>
           <ReserveForm session={session} />
         </>
       ) : (

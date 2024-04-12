@@ -183,7 +183,7 @@ export function ReserveForm({ session }: { session: Session | null }) {
           Reserveer een ruimte voor een bepaalde datum en tijd.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="mt-5">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -313,22 +313,24 @@ export function ReserveForm({ session }: { session: Session | null }) {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="fullname"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Volledige Naam</FormLabel>
-                  <Input
-                    disabled
-                    {...field}
-                    value={fullname || ""}
-                    placeholder="Loading..."
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="hidden">
+              <FormField
+                control={form.control}
+                name="fullname"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Volledige Naam</FormLabel>
+                    <Input
+                      disabled
+                      {...field}
+                      value={fullname || ""}
+                      placeholder="Loading..."
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             {hasRooms ? (
               <Button type="submit" disabled={submitting}>
                 {submitting ? "Laden..." : "Reserveren"}
