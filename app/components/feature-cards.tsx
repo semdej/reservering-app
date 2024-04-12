@@ -6,7 +6,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 
 export default function FeatureCards() {
   return (
-    <section className="dark:bg-neutral-900 bg-slate-100">
+    <section className="bg-secondary">
       <div className="container space-y-8 py-12 text-center lg:py-20">
         <HeadingText subtext="Reserveer eenvoudig met ReserveMate">
           Efficiënt Ruimtebeheer
