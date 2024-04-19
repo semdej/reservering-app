@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import { CiLogin } from "react-icons/ci";
 import Image from "next/image";
-import { Separator } from "./ui/separator";
-import { ModeToggle } from "./ModeToggle";
+import { Separator } from "../../ui/separator";
+import { ModeToggle } from "../../ModeToggle";
 
 export default function NavbarHome() {
   return (

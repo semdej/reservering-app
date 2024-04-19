@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { Database } from "../database.types";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
-import { ReserveForm } from "../components/ReserveForm";
+import { ReserveForm } from "../components/pages/dashboard/ReserveForm";
 import Link from "next/link";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";

@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "./ui/button";
-import { Database } from "../database.types";
+import { Database } from "../../../database.types";
 import { toast } from "sonner";
 
 import {
@@ -18,7 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../components/ui/alert-dialog";
+} from "../../../components/ui/alert-dialog";
 
 import {
   Session,

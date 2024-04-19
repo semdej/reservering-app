@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
-import { Separator } from "./ui/separator";
+import { Separator } from "../../ui/separator";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../components/ui/tabs";
+} from "../../../components/ui/tabs";
 
 import {
   Card,
@@ -15,7 +15,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../components/ui/card";
+} from "../../../components/ui/card";
 import Link from "next/link";
 
 export default function ReserveInfo() {

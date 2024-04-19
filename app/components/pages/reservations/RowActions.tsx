@@ -1,18 +1,18 @@
 "use client";
-import { buttonVariants } from "../components/ui/button";
+import { buttonVariants } from "../../../components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+} from "../../../components/ui/dropdown-menu";
 
 import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
-import { Database } from "../database.types";
+import { Database } from "../../../database.types";
 
 function RowActions() {
   const supabaseClient = createClientComponentClient<Database>();

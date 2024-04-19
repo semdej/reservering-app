@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { Database } from "../database.types";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
-import { TeamForm } from "../components/TeamForm";
+import { TeamForm } from "../components/pages/team/TeamForm";
 
 import { DataTable } from "./DataTable";
 import {
@@ -14,9 +14,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import { JoinTeam } from "../components/JoinTeam";
-import { LeaveTeam } from "../components/LeaveTeam";
-import { RemoveTeam } from "../components/RemoveTeam";
+import { JoinTeam } from "../components/pages/team/JoinTeam";
+import { LeaveTeam } from "../components/pages/team/LeaveTeam";
+import { RemoveTeam } from "../components/pages/team/RemoveTeam";
 
 export default async function Team() {
   const supabase = createServerComponentClient<Database>({ cookies });

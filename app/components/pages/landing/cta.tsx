@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { CardDescription, CardTitle } from "../components/ui/card";
-import { Button } from "./ui/button";
+import { CardDescription, CardTitle } from "../../../components/ui/card";
+import { Button } from "../../ui/button";
 import Link from "next/link";
 
 export default function CTA() {

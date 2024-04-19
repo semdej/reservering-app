@@ -1,12 +1,13 @@
 // @ts-nocheck
+
 "use client";
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Database } from "../database.types";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Database } from "../../../database.types";
 import { toast } from "sonner";
 import {
   Card,
@@ -14,14 +15,20 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../../ui/card";
 
 import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../ui/form";
 
 const FormSchema = z.object({
   invitecode: z.string({ required_error: "Een invite code is verplicht." }),

@@ -1,4 +1,4 @@
-import NavbarHome from "../components/NavbarHome";
+import NavbarHome from "../components/pages/landing/NavbarHome";
 import AuthForm from "./auth-form";
 
 export default function Home() {

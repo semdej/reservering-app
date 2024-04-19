@@ -6,16 +6,16 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Input } from "./ui/input";
-import { Database } from "../database.types";
+} from "../../ui/card";
+import { Input } from "../../ui/input";
+import { Database } from "../../../database.types";
 import { toast } from "sonner";
 import {
   Session,
@@ -29,13 +29,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { TimePicker } from "./time-picker";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Label } from "./ui/label";
-import { DataTable } from "./DataTable";
-import { Calendar } from "./ui/calendar";
+} from "../../ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
+import { TimePicker } from "../../time-picker";
+import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../ui/label";
+import { DataTable } from "../../DataTable";
+import { Calendar } from "../../ui/calendar";
 import { IoIosWarning } from "react-icons/io";
 
 const FormSchema = z.object({

@@ -1,5 +1,5 @@
-import HeadingText from "../components/heading-text";
-import { Card, CardDescription, CardTitle } from "../components/ui/card";
+import HeadingText from "../../../components/heading-text";
+import { Card, CardDescription, CardTitle } from "../../../components/ui/card";
 import { FaColumns } from "react-icons/fa";
 import { FaPeopleArrows } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";

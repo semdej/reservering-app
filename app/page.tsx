@@ -1,7 +1,7 @@
-import NavbarHome from "./components/NavbarHome";
-import Hero from "./components/Hero";
-import FeatureCards from "./components/feature-cards";
-import CTA from "./components/cta";
+import NavbarHome from "./components/pages/landing/NavbarHome";
+import Hero from "./components/pages/landing/Hero";
+import FeatureCards from "./components/pages/landing/feature-cards";
+import CTA from "./components/pages/landing/cta";
 
 export default function Home() {
   return (

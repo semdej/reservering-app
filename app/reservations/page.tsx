@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import RowActions from "../components/RowActions";
+import RowActions from "../components/pages/reservations/RowActions";
 
 export default async function Reservations() {
   const supabase = createServerComponentClient<Database>({ cookies });

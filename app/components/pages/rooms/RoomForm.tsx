@@ -1,21 +1,28 @@
 // @ts-nocheck
+
 "use client";
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Database } from "../database.types";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Database } from "../../../database.types";
 import { toast } from "sonner";
-import { buttonVariants } from "../components/ui/button";
+import { buttonVariants } from "../../../components/ui/button";
 
 import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../ui/form";
 
 import {
   Dialog,
@@ -24,7 +31,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../components/ui/dialog";
+} from "../../../components/ui/dialog";
 
 const FormSchema = z.object({
   roomname: z.string({ required_error: "Een kamer naam is verplicht." }),

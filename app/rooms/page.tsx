@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { Database } from "../database.types";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
-import { RoomForm } from "../components/RoomForm";
+import { RoomForm } from "../components/pages/rooms/RoomForm";
 import { DataTable } from "./DataTable";
 import {
   Card,
