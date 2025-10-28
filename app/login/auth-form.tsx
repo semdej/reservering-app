@@ -7,27 +7,28 @@ import * as nl from "./nl.json";
 
 export default function AuthForm() {
   const supabase = createClientComponentClient<Database>();
+
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="max-w-md w-full">
-        <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="bg-white p-8 rounded-2xl shadow-lg">
           <div className="mb-6 text-center">
             <img
               src="/login.svg"
               alt="Login Illustration"
               className="mx-auto h-24 mb-4"
             />
-            <h2 className="text-gray-600 text-2xl font-semibold mb-2">
+            <h2 className="text-gray-700 text-2xl font-semibold mb-2">
               Inloggen
             </h2>
             <p className="text-gray-600">
-              Log in met je e-mailadres of een van de andere opties om verder te
-              gaan.
+              Log in met je gebruikersnaam en wachtwoord of via een provider.
             </p>
           </div>
+
           <Auth
             supabaseClient={supabase}
-            view="magic_link"
+            view="sign_in"
             appearance={{
               theme: ThemeSupa,
               variables: {
@@ -40,8 +41,7 @@ export default function AuthForm() {
               },
             }}
             theme="light"
-            showLinks={false}
-            providers={["github", "google"]}
+            providers={[]}
             redirectTo="https://reservemate.nl/auth/callback"
             localization={{
               variables: nl,
