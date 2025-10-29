@@ -42,7 +42,7 @@ export default function AuthForm() {
             }}
             theme="light"
             providers={[]}
-            redirectTo="https://reservemate.nl/auth/callback"
+            redirectTo="https://reservemate.nl/dashboard"
             localization={{
               variables: nl,
             }}
