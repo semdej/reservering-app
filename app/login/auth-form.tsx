@@ -42,7 +42,7 @@ export default function AuthForm() {
             }}
             theme="light"
             providers={[]}
-            redirectTo="https://reservemate.nl/dashboard"
+            redirectTo="https://reservering-app-git-main-semdejs-projects.vercel.app/auth/callback"
             localization={{
               variables: nl,
             }}
